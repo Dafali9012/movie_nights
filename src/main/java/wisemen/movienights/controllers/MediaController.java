@@ -18,6 +18,7 @@ public class MediaController {
     @GetMapping("/{query}")
     public List<Media> findMediaByTitle() {
         List<Media> foundMedia = mediaService.findMediaByTitle();
-        if(foundMedia.isEmpty())
+//        if(foundMedia.isEmpty())
+        return null;
     }
 }
