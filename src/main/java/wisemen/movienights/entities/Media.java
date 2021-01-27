@@ -3,12 +3,14 @@ package wisemen.movienights.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@Entity
 @Data
 public class Media {
     @Id
-    private int id;
+    private long id;
     @JsonProperty("imdbID")
     private String imdbID;
     @JsonProperty("Title")

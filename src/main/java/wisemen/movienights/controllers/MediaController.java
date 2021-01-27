@@ -1,9 +1,9 @@
 package wisemen.movienights.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import wisemen.movienights.entities.Media;
 import wisemen.movienights.services.MediaService;
 
@@ -15,9 +15,17 @@ public class MediaController {
     @Autowired
     private MediaService mediaService;
 
-    @GetMapping("/{query}")
-    public List<Media> findMediaByTitle() {
-        List<Media> foundMedia = mediaService.findMediaByTitle();
-        if(foundMedia.isEmpty())
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity<List<Media>> findMediaByTitle(@RequestParam(name = "title") String query) {
+        List<Media> foundMedia = mediaService.findMediaByTitle(query);
+        return ResponseEntity.ok(foundMedia);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Media> getMediaByID(@PathVariable String id) {
+        Media foundMedia = mediaService.getMediaByID(id);
+        if(foundMedia==null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok(foundMedia);
     }
 }
