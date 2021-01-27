@@ -14,8 +14,9 @@ public class MediaService {
     private final String omdbKey = "95cca65d";
 
     public List<Media> findMediaByTitle() {
-        List<Media> foundMedia = restTemplate.getForObject("", MediaResults.class).getSearch();
-        if(foundMedia==null) return new ArrayList<>();
-        return foundMedia;
+//        List<Media> foundMedia = restTemplate.getForObject("", MediaResults.class).getSearch();
+//        if(foundMedia==null) return new ArrayList<>();
+//        return foundMedia;
+        return null;
     }
 }
