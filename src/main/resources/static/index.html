@@ -1,10 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Movie Nights</title>
-</head>
-<body>
-    <h1>Movie Nights</h1>
-</body>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+    <style>
+      section {
+        display: none;
+      }
+      section:target {
+        display: block;
+      }
+
+    </style>
+  </head>
+  <body style="font-family:Optima, serif">
+  <div style="position: relative; min-height: 80vh;">
+
+    <h3>
+      <span style="padding-right: 5vw; font-size: 50px">MovieNight</span>
+      <span style="font-size: 50px">|</span>
+      <span style="padding-left: 5vw; font-size: medium">
+        <a href="#home" style="padding-right: 1vw">Home</a>
+        <a href="#movies" style="padding-right: 1vw">Movies</a>
+        <a href="#tvShows">Tv-shows</a>
+      </span>
+    </h3>
+    <br />
+
+    <div class="sections" style="padding-bottom: 10rem;">
+    <section id="home">
+      <h1 style=" text-align: center; padding-top: 15vh; font-size: xx-large;">
+        HOMEPAGE HERE
+      </h1>
+    </section>
+
+    <section id="movies">
+      <h1 style="text-align: center; padding: 15vh; font-size: xx-large;">
+        MOVIES HERE
+      </h1>
+      <ul style="list-style-type: none; text-align: center;">
+        <li><a href="#home">HomePage</a></li>
+        <li><a href="#tvShows">See available Tv-Shows</a></li>
+      </ul>
+    </section>
+
+    <section id="tvShows">
+      <h1 style="text-align: center; padding: 15vh; font-size: xx-large;">
+        TV-SHOWS HERE
+
+      </h1>
+      <ul style="list-style-type: none; text-align: center;">
+        <li><a href="#home">HomePage</a></li>
+        <li><a href="#movies">See available Movies</a></li>
+      </ul>
+    </section>
+    </div>
+    <footer style="bottom: 0; width: 100%; position: absolute; height: 5rem;text-align: center;">
+      <p>Viewer discretion advised</p>
+      <p>Content could offend someone </p>
+    </footer>
+  </div>
+  </body>
 </html>
