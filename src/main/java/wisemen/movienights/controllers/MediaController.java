@@ -23,9 +23,15 @@ public class MediaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Media> getMediaByID(@PathVariable String id) {
+    public ResponseEntity<Media> getMediaByID(@PathVariable long id) {
         Media foundMedia = mediaService.getMediaByID(id);
         if(foundMedia==null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(foundMedia);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> deleteMediaByID(@PathVariable long id) {
+        if(mediaService.deleteMediaByID(id)) return new ResponseEntity<>(id, HttpStatus.OK);
+        return new ResponseEntity<>(id, HttpStatus.NOT_FOUND);
     }
 }

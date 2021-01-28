@@ -27,20 +27,28 @@ public class MediaService {
         return foundMedia;
     }
 
-    public Media getMediaByID(String id) {
-        Optional<Media> databaseMedia = mediaRepository.findById(Long.parseLong(id));
+    public Media getMediaByID(long id) {
+        Optional<Media> databaseMedia = mediaRepository.findById(id);
         if(databaseMedia.isPresent()) {
             System.out.println("*from database*");
             return databaseMedia.get();
         }
 
-        Media foundMedia = restTemplate.getForObject("http://www.omdbapi.com/?apikey="+omdbKey+"&i=tt"+String.format("%07d",Long.parseLong(id)), Media.class);
+        Media foundMedia = restTemplate.getForObject("http://www.omdbapi.com/?apikey="+omdbKey+"&i=tt"+String.format("%07d",id), Media.class);
         if(foundMedia.getImdbID()==null) return null;
         else {
-            foundMedia.setId(Long.parseLong(id));
+            foundMedia.setId(id);
             mediaRepository.save(foundMedia);
         }
         System.out.println("*from omdb api*");
         return foundMedia;
+    }
+
+    public Boolean deleteMediaByID(long id) {
+        if(mediaRepository.existsById(id)) {
+            mediaRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
