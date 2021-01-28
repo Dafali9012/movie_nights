@@ -35,15 +35,24 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/auth", method = RequestMethod.GET)
+    @RequestMapping(value = "/whoami", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<User> currentUserName(Authentication authentication) {
-
         if (authentication.getName() != null){
               return userService.findUserByEmail(authentication.getName());
         }
         else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @PutMapping(path = "{personId}")
+    public ResponseEntity<User> updatePerson(
+            Authentication authentication,
+            @PathVariable("personId") int id,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email){
+
+        return userService.update(authentication,id,name, email);
     }
 }
