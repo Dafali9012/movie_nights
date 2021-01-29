@@ -1,4 +1,4 @@
-package wisemen.movienights.models;
+package wisemen.movienights.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

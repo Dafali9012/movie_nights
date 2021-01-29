@@ -15,11 +15,16 @@ public class MediaController {
     @Autowired
     private MediaService mediaService;
 
+    @PostMapping
+    public ResponseEntity<Media> addMedia(@RequestBody Media newMedia) {
+        return new ResponseEntity<>(mediaService.addMedia(newMedia), HttpStatus.CREATED);
+    }
+
     @GetMapping
     @ResponseBody
-    public ResponseEntity<List<Media>> findMediaByTitle(@RequestParam(name = "title") String query) {
-        List<Media> foundMedia = mediaService.findMediaByTitle(query);
-        return ResponseEntity.ok(foundMedia);
+    public ResponseEntity<List<Media>> searchMediaByTitle(@RequestParam(name = "title") String query) {
+        List<Media> mediaResults = mediaService.searchMediaByTitle(query);
+        return ResponseEntity.ok(mediaResults);
     }
 
     @GetMapping("/{id}")
@@ -29,9 +34,18 @@ public class MediaController {
         return ResponseEntity.ok(foundMedia);
     }
 
+    // in progress
+    @PutMapping("/{id}")
+    public ResponseEntity<Media> updateMediaByID(@PathVariable long id, @RequestBody Media updatedMedia) {
+        Boolean updated = mediaService.updateMediaByID(id, updatedMedia);
+        if(!updated) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(updatedMedia, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Long> deleteMediaByID(@PathVariable long id) {
-        if(mediaService.deleteMediaByID(id)) return new ResponseEntity<>(id, HttpStatus.OK);
-        return new ResponseEntity<>(id, HttpStatus.NOT_FOUND);
+    public ResponseEntity<Media> deleteMediaByID(@PathVariable long id) {
+        Media foundMedia = mediaService.deleteMediaByID(id);
+        if(foundMedia!=null) return new ResponseEntity<>(foundMedia, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
