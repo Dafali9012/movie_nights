@@ -3,63 +3,107 @@
   <head>
     <meta charset="utf-8" />
     <title>Movie Nights</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"/>
-    <style>
-      section {
-        display: none;
-      }
-      section:target {
-        display: block;
-      }
-    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
   </head>
+  <body style="font-family: Optima, serif">
+    <div style="position: relative; min-height: 80vh">
+      <nav>
+        <h3 style="text-align: center; color: gainsboro">
+          <span style="font-size: 50px">|</span>
+          <span style="font-size: 50px">MovieNight</span>
+          <span style="font-size: 50px">|</span>
+        </h3>
+        <div style=" display: flex; justify-content: center">
+          <button onclick="location.href='#home'" type="button">Home</button>
+          <button onclick="location.href='#movies'" type="button">
+            Movies
+          </button>
+          <button onclick="location.href='#tvShows'" type="button">
+            TvShows
+          </button>
+        </div>
+      </nav>
+      <br />
 
-  <body style="font-family:Optima, serif">
-  <div style="position: relative; min-height: 80vh;">
+      <div class="sections" style="padding-bottom: 10rem">
+        <section id="home">
+          <h1
+            style="text-align: center; padding-top: 15vh; font-size: xx-large"
+          >
+            HOMEPAGE HERE
+          </h1>
+        </section>
 
-    <h3>
-      <span style="padding-right: 8vw; font-size: 50px">MovieNight</span>
-      <span style="font-size: 50px">|</span>
-      <span style="padding-left: 5vw; font-size: medium">
-        <a href="#home" style="padding-right: 1vw">Home</a>
-        <a href="#movies" style="padding-right: 1vw">Movies</a>
-        <a href="#tvShows">Tv-shows</a>
-      </span>
-    </h3>
-    <br />
+        <section id="movies">
+          <h1 style="text-align: center; padding: 15vh; font-size: xx-large">
+            MOVIES HERE
+          </h1>
+          <ul style="list-style-type: none; text-align: center">
+            <li><a href="#home">HomePage</a></li>
+            <li><a href="#tvShows">See available Tv-Shows</a></li>
+          </ul>
+        </section>
 
-    <div class="sections" style="padding-bottom: 10rem;">
-    <section id="home">
-      <h1 style=" text-align: center; padding-top: 15vh; font-size: xx-large;">
-        HOMEPAGE HERE
-      </h1>
-    </section>
-
-    <section id="movies">
-      <h1 style="text-align: center; padding: 15vh; font-size: xx-large;">
-        MOVIES HERE
-      </h1>
-      <ul style="list-style-type: none; text-align: center;">
-        <li><a href="#home">HomePage</a></li>
-        <li><a href="#tvShows">See available Tv-Shows</a></li>
-      </ul>
-    </section>
-
-    <section id="tvShows">
-      <h1 style="text-align: center; padding: 15vh; font-size: xx-large;">
-        TV-SHOWS HERE
-
-      </h1>
-      <ul style="list-style-type: none; text-align: center;">
-        <li><a href="#home">HomePage</a></li>
-        <li><a href="#movies">See available Movies</a></li>
-      </ul>
-    </section>
+        <section id="tvShows">
+          <h1 style="text-align: center; padding: 15vh; font-size: xx-large">
+            TV-SHOWS HERE
+          </h1>
+          <ul style="list-style-type: none; text-align: center">
+            <li><a href="#home">HomePage</a></li>
+            <li><a href="#movies">See available Movies</a></li>
+          </ul>
+        </section>
+      </div>
+      <footer
+        style="
+          bottom: 0;
+          width: 100%;
+          position: absolute;
+          height: 5rem;
+          text-align: center;
+          color: gainsboro;
+        "
+      >
+        <p>Viewer discretion advised</p>
+        <p>Content could offend someone</p>
+      </footer>
     </div>
-    <footer style="bottom: 0; width: 100%; position: absolute; height: 5rem;text-align: center;">
-      <p>Viewer discretion advised</p>
-      <p>Content could offend someone </p>
-    </footer>
-  </div>
   </body>
 </html>
+<style>
+  body  {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  :root {
+    --links: gainsboro;
+  }
+  section {
+    display: none;
+  }
+  section:target {
+    display: block;
+  }
+  body {
+    background: linear-gradient(-45deg, #336699 , #003366, #336699 , #003366);
+    background-size: 500% 500%;
+    animation: gradient 20s infinite;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0 50%;
+    }
+  }
+</style>
+
