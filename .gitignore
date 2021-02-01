@@ -33,4 +33,4 @@ build/
 .vscode/
 
 /database
-database/movie_database.db
+/planning
