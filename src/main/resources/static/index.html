@@ -3,9 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <title>Movie Nights</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"/>
     <link rel="stylesheet" href="./style/style.css"/>
     <script src="./src/index.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script src="main.js" async defer></script>
+    <meta name="google-signin-client_id" content="866364583035-hcldahf3lkh5n33s9bb7biejbl3vpoau.apps.googleusercontent.com">
+
 
   </head>
   <body style="font-family: Optima, serif">
@@ -15,6 +21,10 @@
           <span style="font-size: 50px">|</span>
           <span style="font-size: 50px">MovieNight</span>
           <span style="font-size: 50px">|</span>
+          <br/>
+          <div id="my-signin2"></div>
+          <a href="#" onclick="signOut()">Sign out</a>
+          <br/>
         </h3>
         <div style=" display: flex; justify-content: center">
           <button onclick="location.href='#home'" type="button">Home</button>
