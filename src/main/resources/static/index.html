@@ -3,15 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <title>Movie Nights</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"/>
+    <link rel="stylesheet" href="./style/style.css"/>
+    <script src="./src/index.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <script src="main.js" async defer></script>
     <meta name="google-signin-client_id" content="866364583035-hcldahf3lkh5n33s9bb7biejbl3vpoau.apps.googleusercontent.com">
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
-    />
+
   </head>
   <body style="font-family: Optima, serif">
     <div style="position: relative; min-height: 80vh">
@@ -35,7 +36,6 @@
           </button>
         </div>
       </nav>
-      <br />
 
       <div class="sections" style="padding-bottom: 10rem">
         <section id="home">
@@ -47,9 +47,9 @@
         </section>
 
         <section id="movies">
-          <h1 style="text-align: center; padding: 15vh; font-size: xx-large">
-            MOVIES HERE
-          </h1>
+          <div id="mov">
+
+          </div>
           <ul style="list-style-type: none; text-align: center">
             <li><a href="#home">HomePage</a></li>
             <li><a href="#tvShows">See available Tv-Shows</a></li>
@@ -82,39 +82,4 @@
     </div>
   </body>
 </html>
-<style>
-  body  {
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-  }
-  #my-signin2{
-  display: inline-block;
-  }
-  :root {
-    --links: gainsboro;
-  }
-  section {
-    display: none;
-  }
-  section:target {
-    display: block;
-  }
-  body {
-    background: linear-gradient(-45deg, #336699 , #003366, #336699 , #003366);
-    background-size: 500% 500%;
-    animation: gradient 20s infinite;
-  }
-
-  @keyframes gradient {
-    0% {
-      background-position: 0 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0 50%;
-    }
-  }
-</style>
 
