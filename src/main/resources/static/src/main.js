@@ -28,4 +28,3 @@ function onSuccess(googleUser) {
         'onfailure': onFailure
       });
     }
-
