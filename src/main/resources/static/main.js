@@ -1,31 +1,43 @@
-console.log("test");
+const CLIENT_ID =
+  "834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com";
+let signInButton = document.querySelector("#signinButton");
+let auth2;
 
-function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
+start();
+
+function start() {
+  gapi.load("auth2", function () {
+    auth2 = gapi.auth2.init({
+      client_id: CLIENT_ID,
+      scope: "https://www.googleapis.com/auth/calendar.events",
     });
+  });
 }
-function onSuccess(googleUser) {
-      var profile = googleUser.getBasicProfile();
-        console.log('Logged in as: ' + profile.getName());
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    }
-    function onFailure(error) {
-      console.log(error);
-    }
-    function renderButton() {
-      gapi.signin2.render('my-signin2', {
-        'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-      });
-    }
 
+signInButton.addEventListener("click", () => {
+  auth2.grantOfflineAccess().then(signInCallback);
+});
+
+async function signInCallback(authResult) {
+  console.log("authResult", authResult);
+
+  if (authResult["code"]) {
+    // Hide the sign-in button now that the user is authorized
+    signInButton.style.setProperty("display", "none");
+
+    // Send the code to the server
+    let result = await fetch("/api/storeauthcode", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/octet-stream; charset=utf-8",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      body: authResult["code"],
+    });
+    // etc...
+  } else {
+    // There was an error.
+  }
+}
+
+console.log("Connected");

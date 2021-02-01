@@ -1,13 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Nights</title>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-    <script src="main.js" async defer></script>
-    <meta name="google-signin-client_id" content="866364583035-hcldahf3lkh5n33s9bb7biejbl3vpoau.apps.googleusercontent.com">
-
+      
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
@@ -24,6 +22,7 @@
           <div id="my-signin2"></div>
           <a href="#" onclick="signOut()">Sign out</a>
           <br/>
+          <button id="signinButton">Google Login</button>
         </h3>
         <div style=" display: flex; justify-content: center">
           <button onclick="location.href='#home'" type="button">Home</button>
@@ -80,6 +79,8 @@
         <p>Content could offend someone</p>
       </footer>
     </div>
+      <script  src="https://apis.google.com/js/client:platform.js?onload=start"></script>
+      <script  src="main.js"></script>
   </body>
 </html>
 <style>
