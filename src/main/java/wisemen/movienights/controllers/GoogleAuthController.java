@@ -1,17 +1,23 @@
 package wisemen.movienights.controllers;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.google.api.client.util.Value;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.Events;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class GoogleAuthController {
@@ -109,6 +115,85 @@ public class GoogleAuthController {
         System.out.println("familyName: " + familyName);
 
         System.out.println("givenName: " + givenName);
+
+
+        GoogleCredential credentials = new GoogleCredential().setAccessToken(accessToken);
+
+        Calendar calendar = new Calendar.Builder(
+
+                new NetHttpTransport(),
+
+                JacksonFactory.getDefaultInstance(),
+
+                credentials)
+
+                .setApplicationName("Movie Nights")
+
+                .build();
+
+
+
+        DateTime now = new DateTime(System.currentTimeMillis());
+
+        Events events = null;
+
+        try {
+
+            events = calendar.events().list("primary")
+
+                    .setMaxResults(10)
+
+                    .setTimeMin(now)
+
+                    .setOrderBy("startTime")
+
+                    .setSingleEvents(true)
+
+                    .execute();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        }
+
+
+        List<Event> items = events.getItems();
+
+        if (items.isEmpty()) {
+
+            System.out.println("No upcoming events found.");
+
+        } else {
+
+            System.out.println("Upcoming events");
+
+            for (Event event : items) {
+
+                DateTime start = event.getStart().getDateTime();
+
+                if (start == null) { // If it's an all-day-event - store the date instead
+
+                    start = event.getStart().getDate();
+
+                }
+
+                DateTime end = event.getEnd().getDateTime();
+
+                if (end == null) { // If it's an all-day-event - store the date instead
+
+                    end = event.getStart().getDate();
+
+                }
+
+                System.out.printf("%s (%s) -> (%s)\n", event.getSummary(), start, end);
+
+            }
+
+        }
+
+
+
 
         return "OK";
 
