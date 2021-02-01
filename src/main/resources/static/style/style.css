@@ -2,6 +2,9 @@ body  {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+#my-signin2{
+    display: inline-block;
+}
 :root {
     --links: gainsboro;
 }
