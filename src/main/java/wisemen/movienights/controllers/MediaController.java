@@ -8,6 +8,7 @@ import wisemen.movienights.entities.Media;
 import wisemen.movienights.services.MediaService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/rest/v1/media")
@@ -15,37 +16,35 @@ public class MediaController {
     @Autowired
     private MediaService mediaService;
 
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity<List<Media>> searchMedia(@RequestParam String type, @RequestParam String title) {
+        List<Media> mediaList = mediaService.searchMedia(type, title);
+        return ResponseEntity.ok(mediaList);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Media> findMediaByID(@PathVariable long id) {
+        Media media = mediaService.findMediaByID(id);
+        if(media==null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(media, HttpStatus.FOUND);
+    }
+
     @PostMapping
     public ResponseEntity<Media> addMedia(@RequestBody Media newMedia) {
         return new ResponseEntity<>(mediaService.addMedia(newMedia), HttpStatus.CREATED);
     }
 
-    @GetMapping
-    @ResponseBody
-    public ResponseEntity<List<Media>> searchMediaByTitle(@RequestParam(name = "title") String query) {
-        List<Media> mediaResults = mediaService.searchMediaByTitle(query);
-        return ResponseEntity.ok(mediaResults);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Media> getMediaByID(@PathVariable long id) {
-        Media foundMedia = mediaService.getMediaByID(id);
-        if(foundMedia==null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return ResponseEntity.ok(foundMedia);
-    }
-
-    // in progress
     @PutMapping("/{id}")
-    public ResponseEntity<Media> updateMediaByID(@PathVariable long id, @RequestBody Media updatedMedia) {
-        Boolean updated = mediaService.updateMediaByID(id, updatedMedia);
-        if(!updated) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(updatedMedia, HttpStatus.OK);
+    public ResponseEntity<Media> updateMediaByID(@PathVariable long id) {
+        Media media = mediaService.updateMediaByID(id);
+        if(media==null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(media, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Media> deleteMediaByID(@PathVariable long id) {
-        Media foundMedia = mediaService.deleteMediaByID(id);
-        if(foundMedia!=null) return new ResponseEntity<>(foundMedia, HttpStatus.OK);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @DeleteMapping("/delete")
+    public ResponseEntity<Media> deleteMedia() {
+        mediaService.deleteMedia();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
