@@ -13,5 +13,5 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class Query {
     @Id
-    private String title;
+    private String query;
 }
