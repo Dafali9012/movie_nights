@@ -7,41 +7,48 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"/>
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">-->
     <link rel="stylesheet" href="./style/style.css"/>
-    <meta name="google-signin-client_id" content="866364583035-hcldahf3lkh5n33s9bb7biejbl3vpoau.apps.googleusercontent.com">
+    <script src="./src/index.js"></script>
     <script src="./src/main.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-    <script src="./src/index.js" async defer></script>
+    <meta name="google-signin-client_id" content="866364583035-hcldahf3lkh5n33s9bb7biejbl3vpoau.apps.googleusercontent.com">
 
   </head>
-  <body>
-    <div class="content">
+  <body style="font-family: Verdana, serif">
+    <div style="position: relative; min-height: 80vh">
       <nav>
-        <h3 class="top">
-          <a id="focus" href="#focus"></a>
-          <span class="title">|</span>
-          <span class="title">MovieNights</span>
-          <span class="title">|</span>
+        <h3 style="text-align: center; color: gainsboro">
+          <span style="font-size: 50px">|</span>
+          <span style="font-size: 50px">MovieNight</span>
+          <span style="font-size: 50px">|</span>
+          <br/>
           <div id="my-signin2"></div>
-        <a href="#" class="logOut" onclick="signOut()">Sign out</a>
+          <a href="#" onclick="signOut()">Sign out</a>
+          <br/>
         </h3>
-        <div class="navigate">
-          <button onclick="location.href='#movies'" type="button">Movies</button>
-          <button onclick="location.href='#tvShows'" type="button">Shows</button>
+        <div style=" display: flex; justify-content: center">
+          <button onclick="location.href='#home'" type="button">Home</button>
+          <button onclick="location.href='#movies'" type="button">
+            Movies
+          </button>
+          <button onclick="location.href='#tvShows'" type="button">
+            TvShows
+          </button>
         </div>
-        <form action="" id="searchForm">
-          <div class="searchField">
-            <input type="text" class="inputSearch" id="searchInput" placeholder="Search ...">
-            <button class="btnSubmit" id="btn-Submit">&#10132;</button>
-          </div>
-        </form>
       </nav>
 
       <div class="sections">
+        <section id="home">
+        </section>
+
         <section id="movies">
           <div id="mov">
+
           </div>
-          <div class="links">
+          <div style="text-align: center">
+            <a href="#home">HomePage</a>
+          </div>
+          <div style="text-align: center">
             <a href="#tvShows">See available Tv-Shows</a>
           </div>
         </section>
@@ -50,7 +57,10 @@
           <h1 style="text-align: center; padding: 15vh; font-size: xx-large">
             TV-SHOWS HERE
           </h1>
-          <div class="links">
+          <div style="text-align: center">
+            <a href="#home">HomePage</a>
+          </div>
+          <div style="text-align: center">
             <a href="#movies">See available Movies</a>
           </div>
         </section>
