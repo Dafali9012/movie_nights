@@ -11,14 +11,19 @@ import javax.persistence.Id;
 public class Media {
     @Id
     private long id;
-    @JsonProperty("imdbID")
-    private String imdbID;
+    private String imdbID, imdbRating;
     @JsonProperty("Title")
     private String title;
-    @JsonProperty("Type")
-    private String type;
+    @JsonProperty("Genre")
+    private String genre;
+    @JsonProperty("Released")
+    private String released;
+    @JsonProperty("Runtime")
+    private String runtime;
+    @JsonProperty("Plot")
+    private String plot;
     @JsonProperty("Poster")
     private String poster;
-    @JsonProperty("Year")
-    private int year;
+    @JsonProperty("Type")
+    private String type;
 }

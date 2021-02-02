@@ -5,5 +5,5 @@ import wisemen.movienights.entities.Media;
 import java.util.List;
 
 public interface MediaRepositoryCustom {
-    List<Media> findMediaByTitle(String title);
+    List<Media> searchMedia(String title, String type);
 }

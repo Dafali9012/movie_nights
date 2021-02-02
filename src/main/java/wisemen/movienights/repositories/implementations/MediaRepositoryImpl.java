@@ -16,8 +16,8 @@ public class MediaRepositoryImpl implements MediaRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public List<Media> findMediaByTitle(String title) {
-        Query query = entityManager.createNativeQuery("select * from media where title like '%"+title+"%'", Media.class);
+    public List<Media> searchMedia(String type, String title) {
+        Query query = entityManager.createNativeQuery("select * from media where title like '%"+title+"%' and type like "+type, Media.class);
         return query.getResultList();
     }
 }

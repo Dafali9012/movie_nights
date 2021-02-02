@@ -10,7 +10,9 @@ import wisemen.movienights.repositories.MediaRepository;
 import wisemen.movienights.repositories.QueryRepository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MediaService {
@@ -27,47 +29,40 @@ public class MediaService {
         return newMedia;
     }
 
-    public List<Media> searchMediaByTitle(String query) {
-        if(queryRepository.existsById(query)) {
-            System.out.println("*from database*");
-            return mediaRepository.findMediaByTitle(query);
-        }
-        queryRepository.save(new Query(query));
-        List<Media> mediaResults = restTemplate.getForObject("http://www.omdbapi.com/?apikey="+omdbKey+"&s="+query, MediaResults.class).getSearch();
-        for (Media media : mediaResults) {
-            media.setId(Long.parseLong(media.getImdbID().substring(2)));
-            if (!mediaRepository.existsById(media.getId())) mediaRepository.save(media);
-        }
-        System.out.println("*from omdb api*");
-        return mediaResults;
+    public List<Media> searchMedia(String type, String title) {
+        Optional<Query> databaseQuery = queryRepository.findById(type+title);
+        if(databaseQuery.isPresent()) return mediaRepository.searchMedia(type, title);
+        else queryRepository.save(new Query(type+title));
+
+        List<Media> mediaList = restTemplate.getForObject("http://www.omdbapi.com/?apikey="+omdbKey+"&type="+type+"&s="+title, MediaResults.class).getSearch();
+        mediaList = mediaList.stream().map(a-> findMediaByID(Long.parseLong(a.getImdbID().substring(2)))).collect(Collectors.toList());
+        if(mediaList==null) mediaList = mediaRepository.searchMedia(title, type);
+        return mediaList;
     }
 
-    public Media getMediaByID(long id) {
+    public Media findMediaByID(long id) {
         Optional<Media> databaseMedia = mediaRepository.findById(id);
         if(databaseMedia.isPresent()) {
             System.out.println("*from database*");
             return databaseMedia.get();
         }
 
-        Media foundMedia = restTemplate.getForObject("http://www.omdbapi.com/?apikey="+omdbKey+"&i=tt"+String.format("%07d",id), Media.class);
-        if(foundMedia.getImdbID()==null) return null;
+        Media media = restTemplate.getForObject("http://www.omdbapi.com/?apikey="+omdbKey+"&i=tt"+String.format("%07d",id), Media.class);
+        if(media.getImdbID()==null) return null;
         else {
-            foundMedia.setId(id);
-            mediaRepository.save(foundMedia);
+            media.setId(Long.parseLong(media.getImdbID().substring(2)));
+            mediaRepository.save(media);
         }
         System.out.println("*from omdb api*");
-        return foundMedia;
+        return media;
     }
 
-    public Boolean updateMediaByID(long id, Media updatedMedia) {
-        Boolean update = mediaRepository.existsById(id);
-        if(update) mediaRepository.save(updatedMedia);
-        return update;
+    public Media updateMediaByID(long id) {
+        return restTemplate.getForObject("http://www.omdbapi.com/?apikey="+omdbKey+"&i=tt"+String.format("%07d",id), Media.class);
     }
 
-    public Media deleteMediaByID(long id) {
-        Optional<Media> databaseMedia =  mediaRepository.findById(id);
-        if(databaseMedia.isPresent()) mediaRepository.deleteById(id);
-        return databaseMedia.orElse(null);
+    public void deleteMedia() {
+        mediaRepository.deleteAll();
+        queryRepository.deleteAll();
     }
 }
