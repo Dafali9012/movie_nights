@@ -18,6 +18,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .antMatcher("/restricted").authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.POST,"/rest/v1/calendar/events").permitAll()
+                .antMatchers(HttpMethod.GET,"/rest/v1/calendar/events").permitAll()
                 .anyRequest().authenticated()
                 .and().oauth2Login();
     }

@@ -1,7 +1,7 @@
 
 
 fetchMedia().then((a) => {
-    console.log(a)
+//    console.log(a)
     document.getElementById("mov").innerHTML=`
     <h2>
     ${
