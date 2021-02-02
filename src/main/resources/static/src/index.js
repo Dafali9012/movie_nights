@@ -9,10 +9,12 @@ document.getElementById("btn-Submit").addEventListener('click', function() {
     })
 });
 
-
-
-
 async function fetchMedia(){
     console.log("searching for " + document.getElementById("searchInput").value);
-    return await (await fetch('http://localhost:5500/rest/v1/media?title=' + document.getElementById("searchInput").value)).json();
+    return await (await fetch('http://localhost:5500/rest/v1/media?title=' + document.getElementById("searchInput").value + '&type=movies')).json();
+}
+async function fetchMedia2(){
+    console.log("searching for " + document.getElementById("searchInput").value);
+    let result = document.getElementById("searchInput").value;
+    return await (await fetch(`http://localhost:5500/rest/v1/media?title=${result}&type=movies` )).json();
 }
