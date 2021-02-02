@@ -1,6 +1,9 @@
 body  {
     background-repeat: no-repeat;
     background-attachment: fixed;
+    background: linear-gradient(-45deg, #336699 , #003366, #336699 , #003366);
+    background-size: 500% 500%;
+    animation: gradient 20s infinite;
 }
 #my-signin2{
     display: inline-block;
@@ -14,10 +17,28 @@ section {
 section:target {
     display: block;
 }
-body {
-    background: linear-gradient(-45deg, #336699 , #003366, #336699 , #003366);
-    background-size: 500% 500%;
-    animation: gradient 20s infinite;
+.poster {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    background-color:#00000025;
+    border-radius: 5%;
+}
+
+footer {
+    bottom: 0;
+    width: 100%;
+    position: relative;
+    height: 5rem;
+    text-align: center;
+    color: gainsboro;
+}
+
+#mov {
+    display: flex;
+    justify-content: center;
+    margin: 5% 0% 5% 0%;
+    flex-wrap: wrap;
 }
 
 @keyframes gradient {
