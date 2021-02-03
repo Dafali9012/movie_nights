@@ -1,11 +1,17 @@
 let accessToken;
+
+let signOutButton = document.querySelector('#signOutButton');
+
 function signOut() {
+
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
+    signOutButton.style.setProperty('display', 'none');
 }
 async function onSuccess(googleUser) {
+
       let profile = googleUser.getBasicProfile();
       accessToken = googleUser.uc.access_token;
       console.log(googleUser);
@@ -15,6 +21,7 @@ async function onSuccess(googleUser) {
         console.log('Image URL: ' + profile.getImageUrl());
         console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
         console.log("TOKEN ", accessToken);
+        signOutButton.style.setProperty('display', 'block');
         if(accessToken){
           sendAccessTokenToServer(accessToken);
         }
