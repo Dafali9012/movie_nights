@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+    transition: all 1s ease-in;
+}
 body  {
     font-family: Verdana, serif;
     background: linear-gradient(-45deg, #336699, #003366, #336699, #003366) no-repeat fixed;
@@ -68,8 +72,11 @@ footer {
     text-align: center;
     color: gainsboro;
 }
+.searchField{
+    visibility: hidden;
+}
 
-#mov {
+#mov, #show {
     display: flex;
     justify-content: center;
     margin: 5% 0 5% 0;
