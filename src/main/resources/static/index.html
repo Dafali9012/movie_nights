@@ -8,8 +8,6 @@
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">-->
     <link rel="stylesheet" href="./style/style.css"/>
     <meta name="google-signin-client_id" content="834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com">
-    <script src="./src/main.js"></script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <script src="./src/index.js" async defer></script>
@@ -24,7 +22,7 @@
           <span class="title">MovieNights</span>
           <span class="title">|</span>
           <div id="my-signin2"></div>
-        <a href="#" class="logOut" onclick="signOut()">Sign out</a>
+        <a href="#" id="signOutButton" onclick="signOut()" style="display:none">Sign out</a>
         </h3>
         <div class="navigate">
           <button onclick="location.href='#movies'" type="button">Movies</button>
@@ -61,5 +59,6 @@
         <p>Content could offend someone</p>
       </footer>
     </div>
+    <script src="./src/main.js"></script>
   </body>
 </html>
