@@ -10,7 +10,6 @@ import wisemen.movienights.repositories.MediaRepository;
 import wisemen.movienights.repositories.QueryRepository;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 

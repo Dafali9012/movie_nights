@@ -2,6 +2,7 @@ html {
     scroll-behavior: smooth;
     transition: all 1s ease-in;
 }
+
 body  {
     font-family: Verdana, serif;
     background: linear-gradient(-45deg, #336699, #003366, #336699, #003366) no-repeat fixed;
@@ -9,6 +10,7 @@ body  {
     animation: gradient 20s infinite;
     transition: 1s;
 }
+
 .content{
     position: relative;
     min-height: 80vh;
@@ -25,37 +27,39 @@ body  {
         opacity: 1;
     }
 }
+
 .top, .links{
     text-align: center;
     color: gainsboro
 }
+
 .title{
     font-size: 50px
 }
+
 .navigate, .logOut, #my-signin2, .searchField{
     display: flex;
     justify-content: center;
     padding-bottom: 2vh;
 }
+
 *:focus {
     outline: none;
 }
+
 .inputSearch:focus, input:focus{
     outline: none;
     box-shadow: none;
 }
+
 .btnSubmit{
     margin-left: -20px;
 }
+
 :root {
     --links: gainsboro;
 }
-section {
-    display: none;
-}
-section:target {
-    display: block;
-}
+
 .poster {
     width: 200px;
     height: 200px;
@@ -72,11 +76,12 @@ footer {
     text-align: center;
     color: gainsboro;
 }
+
 .searchField{
     visibility: hidden;
 }
 
-#mov, #show {
+#media-list {
     display: flex;
     justify-content: center;
     margin: 5% 0 5% 0;

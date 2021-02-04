@@ -5,59 +5,44 @@
     <title>Movie Nights</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"/>
-    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">-->
     <link rel="stylesheet" href="./style/style.css"/>
     <meta name="google-signin-client_id" content="834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-    <script src="./src/index.js" async defer></script>
-
+    <script src="https://apis.google.com/js/platform.js" defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" defer></script>
+    <script src="./src/index.js" defer></script>
+    <script src="./src/main.js"></script>
   </head>
   <body>
-    <div class="content">
       <nav>
         <h3 class="top">
-          <!--<a id="focus" href="#focus"></a>-->
           <span class="title">|</span>
           <span class="title">MovieNights</span>
           <span class="title">|</span>
           <div id="my-signin2"></div>
         <a href="#" id="signOutButton" onclick="signOut()" style="display:none">Sign out</a>
         </h3>
+        <h5>Movies</h5>
         <div class="navigate">
-          <button id="infoSite" onclick="location.href='#home';" type="button">Home</button>
-          <button id="movSite" onclick="location.href='#movies';" type="button">Movies</button>
-          <button id="serSite" onclick="location.href='#tvShows';" type="button">Shows</button>
+          <button id="info" type="button">Home</button>
+          <button id="movie" type="button">Movies</button>
+          <button id="series" type="button">Series</button>
         </div>
 
           <div id="textInput" class="searchField">
             <input type="text" class="inputSearch" id="searchInput" placeholder="Search ...">
             <button class="btnSubmit" id="btn-Submit">&#10132;</button>
           </div>
-
       </nav>
 
-      <div class="sections">
-        <section id="home">
-          <div id="info">
-          </div>
-        </section>
-
-        <section id="movies">
-          <div id="mov">
-          </div>
-        </section>
-
-        <section id="tvShows">
-          <div id="show">
-          </div>
-        </section>
+      <div id="info">
       </div>
+
+      <div id="media-list">
+      </div>
+
       <footer>
         <p>Viewer discretion advised</p>
         <p>Content could offend someone</p>
       </footer>
-    </div>
-    <script src="./src/main.js"></script>
   </body>
 </html>
