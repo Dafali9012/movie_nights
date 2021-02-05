@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"/>
     <link rel="stylesheet" href="./style/style.css"/>
     <meta name="google-signin-client_id" content="834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" defer></script>
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" defer></script>
-    <script src="./src/index.js" defer></script>
-    <script src="./src/main.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script src="./src/main.js" async defer></script>
+    <script type="module" src="./src/index.js"></script>
+    
   </head>
   <body>
       <nav>
@@ -21,22 +22,22 @@
           <div id="my-signin2"></div>
         <a href="#" id="signOutButton" onclick="signOut()" style="display:none">Sign out</a>
         </h3>
-        <h5>Movies</h5>
+        <h5 id=sectionTitle>Home</h5>
         <div class="navigate">
           <button id="info" type="button">Home</button>
           <button id="movie" type="button">Movies</button>
           <button id="series" type="button">Series</button>
         </div>
 
-          <div id="textInput" class="searchField">
-            <input type="text" class="inputSearch" id="searchInput" placeholder="Search ...">
-            <button class="btnSubmit" id="btn-Submit">&#10132;</button>
-          </div>
+        <div id="textInput" class="searchField">
+          <input type="text" class="inputSearch" id="searchInput" placeholder="Search ...">
+          <button class="btnSubmit" id="btn-Submit">&#10132;</button>
+        </div>
       </nav>
 
       <div id="info">
       </div>
-
+      
       <div id="media-list">
       </div>
 
@@ -44,5 +45,9 @@
         <p>Viewer discretion advised</p>
         <p>Content could offend someone</p>
       </footer>
+
+      <div id=modal>
+        
+      </div>
   </body>
 </html>

@@ -33,7 +33,7 @@ public class MediaService {
         if(databaseQuery.isPresent()) return mediaRepository.searchMedia(type, title);
         else queryRepository.save(new Query(type+title));
 
-        MediaResults results = restTemplate.getForObject("http://www.omdbapi.com/?apikey="+omdbKey+"&type="+type+"&s="+title, MediaResults.class);
+        MediaResults results = restTemplate.getForObject("http://www.omdbapi.com/?apikey="+omdbKey+"&type="+type+"&s="+title+"&page=1", MediaResults.class);
         List<Media> mediaList;
         if(results.getError()!=null) return mediaRepository.searchMedia(type, title);
         mediaList = results.getSearch();

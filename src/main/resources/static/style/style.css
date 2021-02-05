@@ -37,23 +37,40 @@ body  {
     font-size: 50px
 }
 
+#info, #movie, #series {
+    margin: 0;
+    margin-bottom: 2vh;
+}
+
+#movie {
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+h5 {
+    color: gainsboro;
+    text-align: center;
+}
+
 .navigate, .logOut, #my-signin2, .searchField{
     display: flex;
     justify-content: center;
-    padding-bottom: 2vh;
 }
 
 *:focus {
     outline: none;
 }
 
-.inputSearch:focus, input:focus{
+.inputSearch {
     outline: none;
     box-shadow: none;
+    margin: 0;
+    height: 20px;
 }
 
 .btnSubmit{
-    margin-left: -20px;
+    margin: 0;
+    height: 40px;
 }
 
 :root {
@@ -78,14 +95,29 @@ footer {
 }
 
 .searchField{
-    visibility: hidden;
+    display: none;
 }
 
 #media-list {
+    position: relative;
     display: flex;
     justify-content: center;
-    margin: 5% 0 5% 0;
+    margin: 10px 0 10px 0;
     flex-wrap: wrap;
+    clear: both;
+}
+
+#modal {
+    display: none;
+    position:absolute;
+    width: 65vw;
+    height: 65vh;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: white;
 }
 
 @keyframes gradient {
@@ -98,4 +130,47 @@ footer {
     100% {
         background-position: 0 50%;
     }
+}
+
+@keyframes spinner-line-fade-more {
+    0%, 100% {
+      opacity: 0; /* minimum opacity */
+    }
+    1% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes spinner-line-fade-quick {
+    0%, 39%, 100% {
+      opacity: 0.25; /* minimum opacity */
+    }
+    40% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes spinner-line-fade-default {
+    0%, 100% {
+      opacity: 0.22; /* minimum opacity */
+    }
+    1% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes spinner-line-shrink {
+    0%, 25%, 100% {
+      /* minimum scale and opacity */
+      transform: scale(0.5);
+      opacity: 0.25;
+    }
+    26% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+.spinner {
+    margin: 5vh;
 }

@@ -1,17 +1,15 @@
 let accessToken;
-
-let signOutButton = document.querySelector('#signOutButton');
+let signOutButton = document.getElementById("signOutButton");
 
 function signOut() {
-
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
     signOutButton.style.setProperty('display', 'none');
 }
-async function onSuccess(googleUser) {
 
+async function onSuccess(googleUser) {
   let profile = googleUser.getBasicProfile();
   accessToken = googleUser.uc.access_token;
   console.log(googleUser);
