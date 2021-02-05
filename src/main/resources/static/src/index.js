@@ -28,7 +28,6 @@ let options = {
   };
   
 let spinner = new Spinner(options);
-spinner.spin(mediaContainer);
 
 document.getElementById("info").addEventListener('click', e => {
     changePage(e);
