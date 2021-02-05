@@ -4,7 +4,10 @@ const mediaContainer = document.getElementById("media-list");
 const inputContainer = document.getElementById("textInput");
 const input = document.getElementById("searchInput");
 const sectionTitle = document.getElementById("sectionTitle");
+const modal = document.getElementById("modal");
+const darken = document.getElementById("darken");
 let type = "movie";
+let dataList = [];
 
 let options = {
     lines: 13, // The number of lines to draw
@@ -42,6 +45,7 @@ document.getElementById("series").addEventListener('click', e => {
 function changePage(e) {
     mediaContainer.innerHTML = "";
     input.value = "";
+    dataList = [];
     sectionTitle.innerText = e.currentTarget.id=="info"?"Home":e.currentTarget.id=="movie"?"Movies":e.currentTarget.id=="series"?"Series":"";
     if(e.currentTarget.id=="info") {
         inputContainer.style.display = "none"
@@ -54,15 +58,39 @@ function changePage(e) {
 
 document.getElementById("btn-Submit").addEventListener('click', () => {
     mediaContainer.innerHTML = "";
+    dataList = [];
     spinner.spin(mediaContainer);
     fetchMedia(type).then(a => {
         spinner.stop();
-        a.map(a=>{
-            console.log(a);
+        a.map((a,i)=>{
+            dataList.push(a);
             mediaContainer.innerHTML = mediaContainer.innerHTML.concat(`
-            <img class="poster" src=${a.Poster} data=${a} alt=${a.Title} />`);
+            <img class="poster" src="${a.Poster}" data="${i}" alt="${a.Title}" />`);
+        });
+        document.querySelectorAll(".poster").forEach(el=>{
+            el.addEventListener('click', e=>{
+                modal.style.display = "flex";
+                darken.style.display = "block";
+                document.getElementById("movie-poster").src = dataList[e.currentTarget.getAttribute("data")].Poster;
+                document.getElementById("movie-plot").textContent = dataList[e.currentTarget.getAttribute("data")].Plot;
+                document.getElementById("movie-title").textContent = dataList[e.currentTarget.getAttribute("data")].Title;
+                document.getElementById("movie-genre").textContent = dataList[e.currentTarget.getAttribute("data")].Genre;
+                document.getElementById("movie-runtime").textContent = dataList[e.currentTarget.getAttribute("data")].Runtime;
+                document.getElementById("movie-rating").textContent = dataList[e.currentTarget.getAttribute("data")].imdbRating + " | imdb";
+                console.log("Hej, du har valt film:", dataList[e.currentTarget.getAttribute("data")].Title);
+            });
         });
     })
+});
+
+darken.addEventListener("click", ()=>{
+    modal.style.display = "none";
+    darken.style.display = "none";
+});
+
+document.getElementById("close").addEventListener("click", ()=>{
+    modal.style.display = "none";
+    darken.style.display = "none";
 });
 
 async function fetchMedia(type){
