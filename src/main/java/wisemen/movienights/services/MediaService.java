@@ -10,7 +10,6 @@ import wisemen.movienights.repositories.MediaRepository;
 import wisemen.movienights.repositories.QueryRepository;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,9 +33,12 @@ public class MediaService {
         if(databaseQuery.isPresent()) return mediaRepository.searchMedia(type, title);
         else queryRepository.save(new Query(type+title));
 
-        List<Media> mediaList = restTemplate.getForObject("http://www.omdbapi.com/?apikey="+omdbKey+"&type="+type+"&s="+title, MediaResults.class).getSearch();
+        MediaResults results = restTemplate.getForObject("http://www.omdbapi.com/?apikey="+omdbKey+"&type="+type+"&s="+title+"&page=1", MediaResults.class);
+        List<Media> mediaList;
+        if(results.getError()!=null) return mediaRepository.searchMedia(type, title);
+        mediaList = results.getSearch();
         mediaList = mediaList.stream().map(a-> findMediaByID(Long.parseLong(a.getImdbID().substring(2)))).collect(Collectors.toList());
-        if(mediaList==null) mediaList = mediaRepository.searchMedia(title, type);
+
         return mediaList;
     }
 

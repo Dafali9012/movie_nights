@@ -10,4 +10,6 @@ import java.util.List;
 public class MediaResults {
     @JsonProperty("Search")
     private List<Media> search;
+    @JsonProperty("Error")
+    private String error;
 }

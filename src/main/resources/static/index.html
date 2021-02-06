@@ -5,61 +5,70 @@
     <title>Movie Nights</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"/>
-    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">-->
     <link rel="stylesheet" href="./style/style.css"/>
     <meta name="google-signin-client_id" content="834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com">
-    <script src="./src/main.js"></script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-    <script src="./src/index.js" async defer></script>
-
+    <script src="./src/main.js" async defer></script>
+    <script type="module" src="./src/index.js"></script>
+    
   </head>
   <body>
-    <div class="content">
       <nav>
         <h3 class="top">
-          <a id="focus" href="#focus"></a>
           <span class="title">|</span>
           <span class="title">MovieNights</span>
           <span class="title">|</span>
           <div id="my-signin2"></div>
-        <a href="#" class="logOut" onclick="signOut()">Sign out</a>
+        <a href="#" id="signOutButton" onclick="signOut()" style="display:none">Sign out</a>
         </h3>
+        <h5 id=sectionTitle>Home</h5>
         <div class="navigate">
-          <button onclick="location.href='#movies'" type="button">Movies</button>
-          <button onclick="location.href='#tvShows'" type="button">Shows</button>
+          <button id="info" type="button">Home</button>
+          <button id="movie" type="button">Movies</button>
+          <button id="series" type="button">Series</button>
         </div>
-        <form action="" id="searchForm">
-          <div class="searchField">
-            <input type="text" class="inputSearch" id="searchInput" placeholder="Search ...">
-            <button class="btnSubmit" id="btn-Submit">&#10132;</button>
-          </div>
-        </form>
+
+        <div id="textInput" class="searchField">
+          <input type="text" class="inputSearch" id="searchInput" placeholder="Search ...">
+          <button class="btnSubmit" id="btn-Submit">&#10132;</button>
+        </div>
       </nav>
 
-      <div class="sections">
-        <section id="movies">
-          <div id="mov">
-          </div>
-          <div class="links">
-            <a href="#tvShows">See available Tv-Shows</a>
-          </div>
-        </section>
-
-        <section id="tvShows">
-          <h1 style="text-align: center; padding: 15vh; font-size: xx-large">
-            TV-SHOWS HERE
-          </h1>
-          <div class="links">
-            <a href="#movies">See available Movies</a>
-          </div>
-        </section>
+      <div id="info">
       </div>
+      
+      <div id="media-list">
+      </div>
+
       <footer>
         <p>Viewer discretion advised</p>
         <p>Content could offend someone</p>
       </footer>
-    </div>
+
+      <div id="darken">
+      </div>
+
+      <div id=modal>
+        <div id="left">
+          <img id="movie-poster" src="" alt="poster">
+          <br>
+          <h4 id="movie-rating"></h4>
+        </div>
+        <div id="center">
+          <h4>TITLE</h4>
+          <p id="movie-title"></p>
+          <h4>Genre</h4>
+          <p id="movie-genre"></p>
+          <h4>PLOT</h4>
+          <p id="movie-plot"></p>
+          <h4>RUNTIME</h4>
+          <p id="movie-runtime"></p>      
+        </div>
+        <div id="right">
+          <button id="close">X</button>
+          <button id="event">Create Event</button>
+        </div>
+      </div>
   </body>
 </html>
