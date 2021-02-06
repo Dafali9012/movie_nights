@@ -43,7 +43,7 @@ public class   GoogleCalendarEventsService {
         newEvent.setEnd(eventEnd);
 
         try {
-            googleCalendar.events().insert("primary", newEvent).execute();
+            googleCalendar.events().insert("razviy69@gmail.com", newEvent).execute();
             attendees.clear();
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class   GoogleCalendarEventsService {
         now = new DateTime(System.currentTimeMillis());
 
         try {
-            events = googleCalendar.events().list("primary")
+            events = googleCalendar.events().list("razviy69@gmail.com")
                     .setMaxResults(20)
                     .setTimeMin(now)
                     .setOrderBy("startTime")
@@ -71,6 +71,10 @@ public class   GoogleCalendarEventsService {
             e.printStackTrace();
         }
         return new ResponseEntity<>(events.getItems(), HttpStatus.OK);
+    }
+
+    private void getFreeBus(){
+        googleCalendar.freebusy();
     }
 
     private void initializeGoogleCredentials(String accessToken){
@@ -84,13 +88,15 @@ public class   GoogleCalendarEventsService {
                     new NetHttpTransport(),
                     JacksonFactory.getDefaultInstance(),
                     credentials)
-                    .setApplicationName("Movie Nights")
+                    .setApplicationName("Movies")
                     .build();
+            System.out.println(googleCalendar.getBaseUrl());
         } catch (Exception e){
             System.out.println("Exception ");
             e.printStackTrace();
         }
         return googleCalendar != null;
+
     }
 
     public boolean isAccessTokenValid(String accessToken) {
