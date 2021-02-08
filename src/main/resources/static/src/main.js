@@ -1,12 +1,23 @@
 let accessToken;
 let signOutButton = document.getElementById("signOutButton");
+let eventButton = document.getElementById("event");
 let currentUserImage = document.getElementById("currentUserImage");
 let currentUserName = document.getElementById("currentUserName");
 let currentUser = document.getElementById("currentUser");
+let auth2;
+let googleUser;
 renderButton()
 
+function loginCheck(){
+    if (gapi.auth2.getAuthInstance().isSignedIn.get()){
+        console.log('Signed in: ' + gapi.auth2.getAuthInstance().isSignedIn.get())
+    } else {
+        console.log('Signed in: ' + gapi.auth2.getAuthInstance().isSignedIn.get())
+    }
+}
+
 function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
+    auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
