@@ -1,4 +1,5 @@
 import {Spinner} from '../spin/spin.js';
+import {loginCheck} from "./utils.js";
 
 const mediaContainer = document.getElementById("media-list");
 const inputContainer = document.getElementById("textInput");
@@ -107,13 +108,15 @@ function closeAllModals() {
 }
 
 document.getElementById("event-form").addEventListener("click", ()=> {
-    modalInfo.style.display = "none";
-    modalEvent.style.display = "flex";
-
-    participantsContainer.innerText = "";
-    participantsList = [];
-    document.querySelector("#summary").value = "Movie Night: "+dataList[selectedData].Title;
-    document.querySelector("#desc").value = "Gott välkommen till filmkväll!\n\nFilmbeskrivning:\n"+dataList[selectedData].Plot;
+    if(loginCheck()) {
+        modalInfo.style.display = "none";
+        modalEvent.style.display = "flex";
+    
+        participantsContainer.innerText = "";
+        participantsList = [];
+        document.querySelector("#summary").value = "Movie Night: "+dataList[selectedData].Title;
+        document.querySelector("#desc").value = "Gott välkommen till filmkväll!\n\nFilmbeskrivning:\n"+dataList[selectedData].Plot;
+    }
 });
 
 emailBtn.addEventListener("click", ()=>{
