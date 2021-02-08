@@ -41,7 +41,7 @@ button, input {
     font-size: 50px
 }
 
-#info, #movie, #series {
+#home, #movie, #series {
     margin: 0;
     margin-bottom: 2vh;
 }
@@ -49,6 +49,20 @@ button, input {
 #movie {
     margin-left: 1%;
     margin-right: 1%;
+}
+#currentUser{
+    position: relative;
+}
+#currentUserImage{
+    display:inline-block;
+    height: 40px;
+    width:40px;
+    border-radius: 50%;
+}
+
+#currentUserName{
+    display:inline-block;
+    font-size: 12px;
 }
 
 h5 {
