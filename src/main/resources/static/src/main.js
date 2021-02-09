@@ -7,6 +7,16 @@ let currentUser = document.getElementById("currentUser");
 let auth2;
 let googleUser;
 renderButton()
+start();
+
+function start() {
+  gapi.load('auth2', function() {
+    auth2 = gapi.auth2.getAuthInstance({
+      client_id: "834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com",
+      scope: "https://www.googleapis.com/auth/calendar.events"
+    });
+  });
+}
 
 function loginCheck(){
     if (gapi.auth2.getAuthInstance().isSignedIn.get()){
@@ -27,6 +37,7 @@ function signOut() {
 }
 
 async function onSuccess(googleUser) {
+  auth2.grantOfflineAccess().then(signInCallback);
   let profile = googleUser.getBasicProfile();
   let profileImage = profile.getImageUrl();
   let profileName = document.createTextNode(profile.getName())
@@ -46,6 +57,23 @@ async function onSuccess(googleUser) {
       sendAccessTokenToServer(accessToken);
     }
 }
+
+async function signInCallback(authResult) {
+  console.log('authResult', authResult);
+    if (authResult['code']) {
+
+      let result = await fetch('/api/storeauthcode', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/octet-stream; charset=utf-8',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: authResult['code']
+      });
+  }else {
+       console.log("there was an error")
+     }
+  }
 
 function onFailure(error) {
   console.log(error);
