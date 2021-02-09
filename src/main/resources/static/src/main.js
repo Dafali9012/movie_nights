@@ -20,13 +20,13 @@ async function onSuccess(googleUser) {
   let profileImage = profile.getImageUrl();
   let profileName = document.createTextNode(profile.getName())
   accessToken = googleUser.uc.access_token;
-  console.log(googleUser);
-    console.log('Logged in as: ' + profile.getName());
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    console.log("TOKEN ", accessToken);
+  // console.log(googleUser);
+    // console.log('Logged in as: ' + profile.getName());
+    // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    // console.log('Name: ' + profile.getName());
+    // console.log('Image URL: ' + profile.getImageUrl());
+    // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    // console.log("TOKEN ", accessToken);
     signOutButton.style.setProperty('display', 'block');
     currentUser.style.setProperty('display', 'block');
     currentUserImage.src = profileImage;

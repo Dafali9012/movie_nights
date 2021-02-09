@@ -90,7 +90,6 @@ public class   GoogleCalendarEventsService {
                     credentials)
                     .setApplicationName("Movies")
                     .build();
-            System.out.println(googleCalendar.getBaseUrl());
         } catch (Exception e){
             System.out.println("Exception ");
             e.printStackTrace();
