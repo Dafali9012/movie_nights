@@ -83,6 +83,10 @@ p {
     height: 40vh;
 }
 
+#textInput {
+    margin-top: 1vh;
+}
+
 .inputField {
     outline: none;
     box-shadow: none;

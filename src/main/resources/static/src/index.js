@@ -1,5 +1,6 @@
 import {Spinner} from '../spin/spin.js';
 import {loginCheck} from "./utils.js";
+import { getBusyTime } from "./calendarFunctionality.js";
 
 const infoContainer = document.getElementById("info-text");
 const mediaContainer = document.getElementById("media-list");
@@ -14,6 +15,11 @@ const emailBtn = document.querySelector("#email-btn");
 const emailInput = document.querySelector("#email-input");
 const selectMonth = document.querySelector("#select-month");
 const selectDate = document.querySelector("#select-date");
+const eventPost = document.querySelector("#event-post");
+
+async function poop() {
+    console.log(await getBusyTime("razvannechifor00@gmail.com", "2021-02-10T15:00:00.000Z", "2021-02-10T17:00:00.000Z"));
+}
 
 let type = "movie";
 let dataList = [];
@@ -157,6 +163,36 @@ emailBtn.addEventListener("click", ()=>{
         participantsContainer.innerHTML = participantsContainer.innerHTML.concat(`
             ${email}<br>
         `);
+    }
+});
+
+document.querySelector("#find-time").addEventListener("click", ()=> {
+    let month = document.querySelector("#select-month").value;
+    let date = document.querySelector("#select-date").value;
+
+    let from = new Date(2021, parseInt(month), parseInt(date));
+    from.setHours(0);
+    let to = new Date(from);
+    to.setHours(24);
+
+    console.log(from,to);
+
+    let busyTimes = [];
+
+    for(let email of participantsList) {
+        busyTimes.push(poop(email, from.toISOString(), to.toISOString()));
+    }
+});
+
+eventPost.addEventListener("click", () => {
+    let event = {
+        "summary": document.querySelector("#summary").value,
+        "location": "Malmö",
+        "description": document.querySelector("#desc").value,
+        "start": "2021-02-08T14:00:00.000Z",
+        "end": "2021-02-08T15:00:00.000Z",
+        "timeZone": "GMT+0100",
+        "attendees": participantsList
     }
 });
 
