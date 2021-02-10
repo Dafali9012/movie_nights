@@ -6,7 +6,6 @@ let currentUserName = document.getElementById("currentUserName");
 let currentUser = document.getElementById("currentUser");
 let auth2;
 let googleUser;
-renderButton()
 
 function signOut() {
     auth2 = gapi.auth2.getAuthInstance();

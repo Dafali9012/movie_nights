@@ -149,6 +149,12 @@ footer {
     border-radius: 10px;
 }
 
+#datetime {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .left {
     flex-shrink: 0;
     display: flex;
@@ -175,7 +181,7 @@ footer {
     flex-direction: column;
     justify-content: space-between;
     flex-shrink: 0;
-    padding: 2% 0 2% 0;
+    padding: 2%;
 }
 
 #darken {

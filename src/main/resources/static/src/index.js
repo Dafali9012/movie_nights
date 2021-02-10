@@ -11,6 +11,9 @@ const darken = document.getElementById("darken");
 const participantsContainer = document.querySelector("#list-participants");
 const emailBtn = document.querySelector("#email-btn");
 const emailInput = document.querySelector("#email-input");
+const selectMonth = document.querySelector("#select-month");
+const selectDate = document.querySelector("#select-date");
+
 let type = "movie";
 let dataList = [];
 let selectedData;
@@ -38,6 +41,30 @@ let options = {
   };
   
 let spinner = new Spinner(options);
+
+let today = new Date();
+
+selectMonth.value = today.getMonth();
+updateDateOptions();
+selectDate.value = today.getDate();
+
+function updateDateOptions(month) {
+    console.log("updating");
+    selectDate.innerHTML = ``;
+    let date = new Date();
+    date.setMonth(parseInt(selectMonth.value)+1, 0);
+    console.log(date);
+    for(let i = 0; i < date.getDate(); i++) {
+        selectDate.innerHTML = selectDate.innerHTML.concat(`
+            <option value="${i+1}">${i+1}</option>
+        `);
+    }
+}
+
+selectMonth.onchange = e => {
+    console.log(e.currentTarget.value);
+    updateDateOptions(selectMonth.value);
+}
 
 document.getElementById("info").addEventListener('click', e => {
     changePage(e);
@@ -108,7 +135,7 @@ function closeAllModals() {
 }
 
 document.getElementById("event-form").addEventListener("click", ()=> {
-    if(loginCheck()) {
+    if(loginCheck() || true) {
         modalInfo.style.display = "none";
         modalEvent.style.display = "flex";
     

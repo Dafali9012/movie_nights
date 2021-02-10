@@ -84,11 +84,40 @@
           </div>
           <div id="list-participants" style="align-self: start; padding-left: 5%;"></div>
         </div>
-        <div class="center" style="padding-right: 5%;">
+        <div class="center">
           <h4>SUMMARY</h4>
           <textarea id="summary" style="height: 4em;"></textarea>
           <h4>DESCRIPTION</h4>
-          <textarea id="desc" style="height: 16em;"></textarea>
+          <textarea id="desc" style="height: 12em;"></textarea>
+          <div id="datetime">
+            <div class="center-left">
+              <h4>Find Time</h4>
+              <select id="select-month">
+                <option value="0">January</option>
+                <option value="1">February</option>
+                <option value="2">Mars</option>
+                <option value="3">April</option>
+                <option value="4">May</option>
+                <option value="5">June</option>
+                <option value="6">July</option>
+                <option value="7">August</option>
+                <option value="8">September</option>
+                <option value="9">October</option>
+                <option value="10">November</option>
+                <option value="11">December</option>
+              </select>
+              <select id="select-date">
+                
+              </select>
+              <button>Find Time</button>
+            </div>
+            <div class="center-right">
+              <h4>Select Time</h4>
+              <select id="select-time" disabled>
+                
+              </select>
+            </div>
+          </div>
         </div>
         <div class="right">
           <button class="close-modal">X</button>
