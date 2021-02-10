@@ -1,15 +1,18 @@
 let accessToken;
 let signOutButton = document.getElementById("signOutButton");
+let signInButton = document.getElementById("signInButton");
 let eventButton = document.getElementById("event");
 let currentUserImage = document.getElementById("currentUserImage");
 let currentUserName = document.getElementById("currentUserName");
 let currentUser = document.getElementById("currentUser");
 let auth2;
-let googleUser;
+onLoadCallback()
 
 function onLoadCallback() {
-  renderButton();
   start();
+  signInButton.addEventListener('click', () => {
+    signIn();
+  });
 }
 
 function start() {
@@ -19,6 +22,10 @@ function start() {
       scope: "https://www.googleapis.com/auth/calendar.events"
     });
   });
+}
+
+function signIn(){
+    auth2.grantOfflineAccess().then(signInCallback);
 }
 
 function signOut() {
@@ -31,27 +38,6 @@ function signOut() {
     currentUserName.removeChild(currentUserName.firstChild);
 }
 
-async function onSuccess(googleUser) {
-  auth2.grantOfflineAccess().then(signInCallback);
-  let profile = googleUser.getBasicProfile();
-  let profileImage = profile.getImageUrl();
-  let profileName = document.createTextNode(profile.getName())
-  accessToken = googleUser.uc.access_token;
-  // console.log(googleUser);
-    // console.log('Logged in as: ' + profile.getName());
-    // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    // console.log('Name: ' + profile.getName());
-    // console.log('Image URL: ' + profile.getImageUrl());
-    // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    // console.log("TOKEN ", accessToken);
-    signOutButton.style.setProperty('display', 'block');
-    currentUser.style.setProperty('display', 'block');
-    currentUserImage.src = profileImage;
-    currentUserName.appendChild(profileName);
-    if(accessToken){
-      sendAccessTokenToServer(accessToken);
-    }
-}
 
 async function signInCallback(authResult) {
   console.log('authResult', authResult);
@@ -68,22 +54,16 @@ async function signInCallback(authResult) {
   }else {
        console.log("there was an error")
      }
+ showUserInfoAndSignOutButton();
   }
 
-function onFailure(error) {
-  console.log(error);
-}
-
-function renderButton() {
-  gapi.signin2.render('my-signin2', {
-    'scope': 'profile email',
-    'width': 240,
-    'height': 50,
-    'longtitle': true,
-    'theme': 'dark',
-    'onsuccess': onSuccess,
-    'onfailure': onFailure
-  });
+function showUserInfoAndSignOutButton(){
+  let googleUser = gapi.auth2.getAuthInstance().currentUser.get();
+  let profile = googleUser.getBasicProfile()
+  signOutButton.style.setProperty('display', 'block');
+  currentUser.style.setProperty('display', 'block');
+  currentUserImage.src = profile.getImageUrl();;
+  currentUserName.appendChild(document.createTextNode(profile.getName()));
 }
 
 async function sendAccessTokenToServer(accessToken){
