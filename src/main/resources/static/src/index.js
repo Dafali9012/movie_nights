@@ -1,6 +1,7 @@
 import {Spinner} from '../spin/spin.js';
 import {loginCheck} from "./utils.js";
 
+const infoContainer = document.getElementById("info-text");
 const mediaContainer = document.getElementById("media-list");
 const inputContainer = document.getElementById("textInput");
 const input = document.getElementById("searchInput");
@@ -83,10 +84,12 @@ function changePage(e) {
     sectionTitle.innerText = e.currentTarget.id=="info"?"Home":e.currentTarget.id=="movie"?"Movies":e.currentTarget.id=="series"?"Series":"";
     if(e.currentTarget.id=="info") {
         inputContainer.style.display = "none"
+        infoContainer.style.display = "flex"
     }
     else {
         type = e.currentTarget.id;
         inputContainer.style.display = "flex"
+        infoContainer.style.display = "none"
     }
 }
 

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./style/style.css"/>
     <meta name="google-signin-client_id" content="834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
     <script src="./src/main.js" async defer></script>
     <script type="module" src="./src/index.js"></script>
     
@@ -28,7 +28,7 @@
         </h3>
         <h5 id=sectionTitle>Home</h5>
         <div class="navigate">
-          <button id="home" type="button">Home</button>
+          <button id="info" type="button">Home</button>
           <button id="movie" type="button">Movies</button>
           <button id="series" type="button">Series</button>
         </div>
@@ -39,9 +39,8 @@
         </div>
       </nav>
 
-      <div id="info">
-      </div>
-      
+      <embed id="info-text" src="infoText.txt">
+
       <div id="media-list">
       </div>
 
