@@ -17,9 +17,11 @@ const selectMonth = document.querySelector("#select-month");
 const selectDate = document.querySelector("#select-date");
 const eventPost = document.querySelector("#event-post");
 
-async function poop() {
-    console.log(await getBusyTime("razvannechifor00@gmail.com", "2021-02-10T15:00:00.000Z", "2021-02-10T17:00:00.000Z"));
+/*
+async function poop(email, start, end) {
+    return getBusyTime("razvannechifor00@gmail.com", "2021-02-10T15:00:00.000Z", "2021-02-10T17:00:00.000Z");
 }
+*/
 
 let type = "movie";
 let dataList = [];
@@ -56,11 +58,9 @@ updateDateOptions();
 selectDate.value = today.getDate();
 
 function updateDateOptions(month) {
-    console.log("updating");
     selectDate.innerHTML = ``;
     let date = new Date();
     date.setMonth(parseInt(selectMonth.value)+1, 0);
-    console.log(date);
     for(let i = 0; i < date.getDate(); i++) {
         selectDate.innerHTML = selectDate.innerHTML.concat(`
             <option value="${i+1}">${i+1}</option>
@@ -144,7 +144,7 @@ function closeAllModals() {
 }
 
 document.getElementById("event-form").addEventListener("click", ()=> {
-    if(loginCheck() || true) {
+    if(true) {
         modalInfo.style.display = "none";
         modalEvent.style.display = "flex";
     
@@ -166,22 +166,45 @@ emailBtn.addEventListener("click", ()=>{
     }
 });
 
-document.querySelector("#find-time").addEventListener("click", ()=> {
+let busyTimes = [];
+
+document.querySelector("#find-time").addEventListener("click", async ()=> {
     let month = document.querySelector("#select-month").value;
     let date = document.querySelector("#select-date").value;
 
-    let from = new Date(2021, parseInt(month), parseInt(date));
-    from.setHours(0);
-    let to = new Date(from);
-    to.setHours(24);
+    let start = new Date(2021, parseInt(month), parseInt(date));
+    start.setHours(0);
+    let end = new Date(start);
+    end.setHours(24);
 
-    console.log(from,to);
-
-    let busyTimes = [];
-
-    for(let email of participantsList) {
-        busyTimes.push(poop(email, from.toISOString(), to.toISOString()));
+    let availableTimes = [];
+    for(let i = 0; i < 48; i++) {
+        let time = new Date(start);
+        time.setMinutes(time.getMinutes()+30*i);
+        availableTimes.push(time.getTime());
     }
+
+    console.log(availableTimes);
+
+    for(let i = 0; i < participantsList.length; i++) {
+        await getBusyTime(participantsList[i], start.toISOString(), end.toISOString()).then(a=>{
+            busyTimes.push(a);
+        });
+    }
+
+    for(let calendar of busyTimes) {
+        for(let event of calendar) {   
+            for(let time of availableTimes) {
+                if(time >= new Date(event.start).getTime() &&
+                time <= new Date(event.end).getTime()) {
+                    console.log("deleting");
+                    availableTimes = availableTimes.slice(availableTimes.indexOf(time),availableTimes.indexOf(time)+1);
+                }
+            }
+        }
+    }
+
+    console.log(availableTimes);
 });
 
 eventPost.addEventListener("click", () => {
