@@ -1,5 +1,5 @@
 import {Spinner} from '../spin/spin.js';
-import {getBusyTime} from './calendarFunctionality.js';
+
 
 const mediaContainer = document.getElementById("media-list");
 const inputContainer = document.getElementById("textInput");
@@ -32,9 +32,9 @@ let options = {
     position: 'relative', // Element positioning
   };
 
- getBusyTime("razvannechifor00@gmail.com", "2021-02-08T13:00:00.000Z", "2021-02-08T18:00:00.000Z");
 
-console.log("BUSY TIME", busy);
+
+
   
 let spinner = new Spinner(options);
 
