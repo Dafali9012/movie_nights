@@ -29,45 +29,13 @@ async function getBusyTime(calendarId, startDate, endDate) {
   let response = await rawResponse.json();
 
   if(Object.keys(response).includes("error")){
+    console.log("hello")
     const  error = {
-          code: 400,
-          message: response.error.message
-      }
-      return error;
+      code: 400,
+      message: response.error.message
+    }
+    return error;
   }
 
-  else {
-    let busyTimeArray = response.calendars[calendarId].busy;
-    return busyTimeArray;
-  }
+  return response.calendars[calendarId].busy;
 }
-
-function generateFreeDate( startDate, endDate){
-    const day = new Date(startDate).getDate();
-    const month = new Date(startDate).getMonth();
-    const year = new Date(startDate).getFullYear();
-    const currentDay = new Date(year,month,day);
-    
-    console.log("CURRENT DAY :", currentDay);
-
-}
-
-async function getFreeTime(calendarId, startDate, endDate) {
-//   let date = new Date(startDate);
-   
-
-  let res = await getBusyTime(calendarId, startDate, endDate);
-//   generateFreeDate(startDate, endDate)
-//     if(res.length == 0){
-        
-//     }
-
-
-  console.log(res);
-}
-
-getFreeTime(
-  "razvannechifor00@gmail.com",
-  "2021-02-09T19:00:00.000Z",
-  "2021-02-09T20:00:00.000Z"
-);
