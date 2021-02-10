@@ -79,9 +79,8 @@ p {
     outline: none;
 }
 #info-text{
-    text-align: center;
     width: 100%;
-    height: 45vh;
+    height: 40vh;
 }
 .inputSearch {
     outline: none;
