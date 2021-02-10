@@ -40,7 +40,7 @@ let options = {
     className: 'spinner', // The CSS class to assign to the spinner
     position: 'relative', // Element positioning
   };
-  
+
 let spinner = new Spinner(options);
 
 let today = new Date();
@@ -67,7 +67,7 @@ selectMonth.onchange = e => {
     updateDateOptions(selectMonth.value);
 }
 
-document.getElementById("info").addEventListener('click', e => {
+document.getElementById("home").addEventListener('click', e => {
     changePage(e);
 })
 document.getElementById("movie").addEventListener('click', e => {
@@ -81,8 +81,8 @@ function changePage(e) {
     mediaContainer.innerHTML = "";
     input.value = "";
     dataList = [];
-    sectionTitle.innerText = e.currentTarget.id=="info"?"Home":e.currentTarget.id=="movie"?"Movies":e.currentTarget.id=="series"?"Series":"";
-    if(e.currentTarget.id=="info") {
+    sectionTitle.innerText = e.currentTarget.id=="home"?"Home":e.currentTarget.id=="movie"?"Movies":e.currentTarget.id=="series"?"Series":"";
+    if(e.currentTarget.id=="home") {
         inputContainer.style.display = "none"
         infoContainer.style.display = "flex"
     }
