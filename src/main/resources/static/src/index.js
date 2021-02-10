@@ -1,6 +1,6 @@
 import {Spinner} from '../spin/spin.js';
 
-const infoContainer = document.getElementById("text");
+const infoContainer = document.getElementById("info-text");
 const mediaContainer = document.getElementById("media-list");
 const inputContainer = document.getElementById("textInput");
 const input = document.getElementById("searchInput");
