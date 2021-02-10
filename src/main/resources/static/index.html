@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./style/style.css"/>
     <meta name="google-signin-client_id" content="834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
     <script src="./src/main.js" async defer></script>
     <script type="module" src="./src/index.js"></script>
     <script defer type="module" src="./src/calendarFunctionality.js"></script>
@@ -35,7 +35,7 @@
         </div>
 
         <div id="textInput" class="searchField">
-          <input type="text" class="inputSearch" id="searchInput" placeholder="Search ...">
+          <input type="text" class="inputField" id="searchInput" placeholder="Search ...">
           <button class="btnSubmit" id="btn-Submit">&#10132;</button>
         </div>
       </nav>
@@ -53,13 +53,13 @@
       <div id="darken">
       </div>
 
-      <div id=modal>
-        <div id="left">
+      <div id=modal-info>
+        <div class="left">
           <img id="movie-poster" src="" alt="poster">
           <br>
           <h4 id="movie-rating"></h4>
         </div>
-        <div id="center">
+        <div class="center">
           <h4>TITLE</h4>
           <p id="movie-title"></p>
           <h4>Genre</h4>
@@ -69,9 +69,59 @@
           <h4>RUNTIME</h4>
           <p id="movie-runtime"></p>      
         </div>
-        <div id="right">
-          <button id="close">X</button>
-          <button id="event" onclick="loginCheck()">Create Event</button>
+        <div class="right">
+          <button class="close-modal">X</button>
+          <button class="btnSubmit" id="event-form">Create Event</button>
+        </div>
+      </div>
+
+      <div id=modal-event>
+        <div class="left" style="flex-grow: .25;">
+          <h4 style="align-self: start; padding-left: 5%;">ADD PARTICIPANTS</h4>
+          <div id="inputContainer-email" style="padding-bottom: 10px;">
+            <input class="inputField" type="text" id="email-input" placeholder="example@mail.com" style="width: 90%">
+            <button class="btnSubmit" id="email-btn">&#10132;</button>
+          </div>
+          <div id="list-participants" style="align-self: start; padding-left: 5%;"></div>
+        </div>
+        <div class="center">
+          <h4>SUMMARY</h4>
+          <textarea id="summary" style="height: 4em;"></textarea>
+          <h4>DESCRIPTION</h4>
+          <textarea id="desc" style="height: 12em;"></textarea>
+          <div id="datetime">
+            <div class="center-left">
+              <h4>Find Time</h4>
+              <select id="select-month">
+                <option value="0">January</option>
+                <option value="1">February</option>
+                <option value="2">Mars</option>
+                <option value="3">April</option>
+                <option value="4">May</option>
+                <option value="5">June</option>
+                <option value="6">July</option>
+                <option value="7">August</option>
+                <option value="8">September</option>
+                <option value="9">October</option>
+                <option value="10">November</option>
+                <option value="11">December</option>
+              </select>
+              <select id="select-date">
+                
+              </select>
+              <button>Find Time</button>
+            </div>
+            <div class="center-right">
+              <h4>Select Time</h4>
+              <select id="select-time" disabled>
+                
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="right">
+          <button class="close-modal">X</button>
+          <button id="event-post">Create Event</button>
         </div>
       </div>
   </body>

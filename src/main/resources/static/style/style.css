@@ -11,6 +11,10 @@ body  {
     transition: 1s;
 }
 
+button, input {
+    margin: 0;
+}
+
 .content{
     position: relative;
     min-height: 80vh;
@@ -35,11 +39,6 @@ body  {
 
 .title{
     font-size: 50px
-}
-
-#home, #movie, #series {
-    margin: 0;
-    margin-bottom: 2vh;
 }
 
 #movie {
@@ -70,7 +69,7 @@ p {
     margin: 0;
 }
 
-.navigate, .logOut, #my-signin2, .searchField{
+.navigate, .logOut, #my-signin2, .searchField {
     display: flex;
     justify-content: center;
 }
@@ -78,20 +77,22 @@ p {
 *:focus {
     outline: none;
 }
+
 #info-text{
     width: 100%;
     height: 40vh;
 }
-.inputSearch {
+
+.inputField {
     outline: none;
     box-shadow: none;
     margin: 0;
-    height: 20px;
+    border-radius: 6px 0 0 6px;
 }
 
 .btnSubmit{
     margin: 0;
-    height: 40px;
+    border-radius: 0 6px 6px 0;
 }
 
 :root {
@@ -119,6 +120,11 @@ footer {
     display: none;
 }
 
+#inputContainer-email {
+    display: flex;
+    flex-direction: row;
+}
+
 #media-list {
     position: relative;
     display: flex;
@@ -128,7 +134,7 @@ footer {
     clear: both;
 }
 
-#modal {
+#modal-info, #modal-event {
     display: none;
     flex-direction: row;
     position:absolute;
@@ -143,11 +149,17 @@ footer {
     border-radius: 10px;
 }
 
-#left {
+#datetime {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.left {
     flex-shrink: 0;
     display: flex;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
 }
 
 #movie-poster {
@@ -155,7 +167,7 @@ footer {
     width: 90%;
 }
 
-#center {
+.center {
     flex-grow: 3;
 }
 
@@ -164,12 +176,12 @@ footer {
     width:90%;
 }
 
-#right {
+.right {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex-shrink: 0;
-    padding: 2% 0 2% 0;
+    padding: 2%;
 }
 
 #darken {

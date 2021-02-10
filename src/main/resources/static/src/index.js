@@ -1,15 +1,24 @@
 import {Spinner} from '../spin/spin.js';
+import {loginCheck} from "./utils.js";
 
 const infoContainer = document.getElementById("info-text");
 const mediaContainer = document.getElementById("media-list");
 const inputContainer = document.getElementById("textInput");
 const input = document.getElementById("searchInput");
 const sectionTitle = document.getElementById("sectionTitle");
-const modal = document.getElementById("modal");
+const modalInfo = document.getElementById("modal-info");
+const modalEvent = document.getElementById("modal-event");
 const darken = document.getElementById("darken");
+const participantsContainer = document.querySelector("#list-participants");
+const emailBtn = document.querySelector("#email-btn");
+const emailInput = document.querySelector("#email-input");
+const selectMonth = document.querySelector("#select-month");
+const selectDate = document.querySelector("#select-date");
+
 let type = "movie";
 let dataList = [];
-
+let selectedData;
+let participantsList = [];
 
 let options = {
     lines: 13, // The number of lines to draw
@@ -32,11 +41,31 @@ let options = {
     position: 'relative', // Element positioning
   };
 
-
-
-
-  
 let spinner = new Spinner(options);
+
+let today = new Date();
+
+selectMonth.value = today.getMonth();
+updateDateOptions();
+selectDate.value = today.getDate();
+
+function updateDateOptions(month) {
+    console.log("updating");
+    selectDate.innerHTML = ``;
+    let date = new Date();
+    date.setMonth(parseInt(selectMonth.value)+1, 0);
+    console.log(date);
+    for(let i = 0; i < date.getDate(); i++) {
+        selectDate.innerHTML = selectDate.innerHTML.concat(`
+            <option value="${i+1}">${i+1}</option>
+        `);
+    }
+}
+
+selectMonth.onchange = e => {
+    console.log(e.currentTarget.value);
+    updateDateOptions(selectMonth.value);
+}
 
 document.getElementById("home").addEventListener('click', e => {
     changePage(e);
@@ -77,28 +106,58 @@ document.getElementById("btn-Submit").addEventListener('click', () => {
         });
         document.querySelectorAll(".poster").forEach(el=>{
             el.addEventListener('click', e=>{
-                modal.style.display = "flex";
+                modalInfo.style.display = "flex";
                 darken.style.display = "block";
-                document.getElementById("movie-poster").src = dataList[e.currentTarget.getAttribute("data")].Poster;
-                document.getElementById("movie-plot").textContent = dataList[e.currentTarget.getAttribute("data")].Plot;
-                document.getElementById("movie-title").textContent = dataList[e.currentTarget.getAttribute("data")].Title;
-                document.getElementById("movie-genre").textContent = dataList[e.currentTarget.getAttribute("data")].Genre;
-                document.getElementById("movie-runtime").textContent = dataList[e.currentTarget.getAttribute("data")].Runtime;
-                document.getElementById("movie-rating").textContent = dataList[e.currentTarget.getAttribute("data")].imdbRating + " | imdb";
-                console.log("Hej, du har valt film:", dataList[e.currentTarget.getAttribute("data")].Title);
+                selectedData = e.currentTarget.getAttribute("data");
+                document.getElementById("movie-poster").src = dataList[selectedData].Poster;
+                document.getElementById("movie-plot").textContent = dataList[selectedData].Plot;
+                document.getElementById("movie-title").textContent = dataList[selectedData].Title;
+                document.getElementById("movie-genre").textContent = dataList[selectedData].Genre;
+                document.getElementById("movie-runtime").textContent = dataList[selectedData].Runtime;
+                document.getElementById("movie-rating").textContent = dataList[selectedData].imdbRating + " | imdb";
+                console.log("Hej, du har valt film:", dataList[selectedData].Title);
             });
         });
     })
 });
 
 darken.addEventListener("click", ()=>{
-    modal.style.display = "none";
-    darken.style.display = "none";
+    closeAllModals();
 });
 
-document.getElementById("close").addEventListener("click", ()=>{
-    modal.style.display = "none";
+document.querySelectorAll(".close-modal").forEach(a => {
+    a.addEventListener("click", ()=>{
+        closeAllModals();
+    });
+});
+
+function closeAllModals() {
+    modalEvent.style.display = "none";
+    modalInfo.style.display = "none";
     darken.style.display = "none";
+}
+
+document.getElementById("event-form").addEventListener("click", ()=> {
+    if(loginCheck() || true) {
+        modalInfo.style.display = "none";
+        modalEvent.style.display = "flex";
+    
+        participantsContainer.innerText = "";
+        participantsList = [];
+        document.querySelector("#summary").value = "Movie Night: "+dataList[selectedData].Title;
+        document.querySelector("#desc").value = "Gott välkommen till filmkväll!\n\nFilmbeskrivning:\n"+dataList[selectedData].Plot;
+    }
+});
+
+emailBtn.addEventListener("click", ()=>{
+    participantsList.push(emailInput.value);
+    emailInput.value = "";
+    participantsContainer.innerText = "";
+    for(let email of participantsList) {
+        participantsContainer.innerHTML = participantsContainer.innerHTML.concat(`
+            ${email}<br>
+        `);
+    }
 });
 
 async function fetchMedia(type){

@@ -6,8 +6,11 @@ let currentUserName = document.getElementById("currentUserName");
 let currentUser = document.getElementById("currentUser");
 let auth2;
 let googleUser;
-renderButton()
-start();
+
+function onLoadCallback() {
+  renderButton();
+  start();
+}
 
 function start() {
   gapi.load('auth2', function() {
@@ -16,14 +19,6 @@ function start() {
       scope: "https://www.googleapis.com/auth/calendar.events"
     });
   });
-}
-
-function loginCheck(){
-    if (gapi.auth2.getAuthInstance().isSignedIn.get()){
-        console.log('Signed in: ' + gapi.auth2.getAuthInstance().isSignedIn.get())
-    } else {
-        console.log('Signed in: ' + gapi.auth2.getAuthInstance().isSignedIn.get())
-    }
 }
 
 function signOut() {
