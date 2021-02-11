@@ -194,26 +194,35 @@ document.querySelector("#find-time").addEventListener("click", async ()=> {
         }
     }
 
-    timesToRemove = Array.from(new Set(timesToRemove));
-
-    for(let time of timesToRemove) {
-        availableTimes.splice(availableTimes.indexOf(time), 1);
-    }
-
-    timesToRemove = [];
-
     let runtimeRound = Math.ceil(parseInt(dataList[selectedData].Runtime)/30)*30;
-    console.log(runtimeRound);
+
+    /*
+    let previousTime;
     for(let i = availableTimes.length; i > 0; i--) {
         if(i == availableTimes.length) {
-            availableTimes.slice(i-runtimeRound/30+1, availableTimes.length).forEach(a=>{
-                timesToRemove.push(a);
+            availableTimes.slice(i-runtimeRound/30+1, availableTimes.length).reverse().forEach(a=>{
+                previousTime = a;
+                    if(i == 0) {
+                        timesToRemove.push(a);
+                    } else {
+                        if(!(a.getTime()-previousTime.getTime() > 30*60*1000)) timesToRemove.push(a);
+                    }
             });
         } else {
-            //let previousTime = availableTimes[i]+1;
-            //dataList[selectedData].Runtime
+            previousTime = availableTimes[i+1];
+            if(previousTime.getTime()-availableTimes[i].getTime() > 30*60*1000) {
+                availableTimes.slice(i-runtimeRound/30+1, availableTimes.length).reverse().forEach((a,i)=>{
+                    previousTime = a;
+                    if(i == 0) {
+                        timesToRemove.push(a);
+                    } else {
+                        if(!(a.getTime()-previousTime.getTime() > 30*60*1000)) timesToRemove.push(a);
+                    }
+                });
+            }
         }
     }
+    */
 
     timesToRemove = Array.from(new Set(timesToRemove));
 
@@ -231,17 +240,27 @@ document.querySelector("#find-time").addEventListener("click", async ()=> {
 });
 
 document.querySelector("#event-post").addEventListener("click", () => {
-    if(!selectTime.hasAttribute("disabled")) {
-        let event = {
-            "summary": document.querySelector("#summary").value,
-            "location": "Malmö",
-            "description": document.querySelector("#desc").value,
-            "start": "2021-02-08T14:00:00.000Z",
-            "end": "2021-02-08T15:00:00.000Z",
-            "timeZone": "GMT+0100",
-            "attendees": participantsList
-        }
+    let endDate = new Date(selectTime.value);
+
+    endDate.setMinutes(endDate.getMinutes()+parseInt(dataList[selectedData].Runtime));
+
+    let event = {
+        summary: document.querySelector("#summary").value,
+        location: "Malmö",
+        description: document.querySelector("#desc").value,
+        start: selectTime.value,
+        end: endDate.toISOString(),
+        timeZone: "GMT+0100",
+        attendees: participantsList
     }
+
+    fetch("/rest/v1/calendar/events" ,{
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(event),
+        method:"POST"
+    });
 });
 
 async function fetchMedia(type){
