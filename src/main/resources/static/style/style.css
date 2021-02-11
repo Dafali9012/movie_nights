@@ -14,6 +14,9 @@ body  {
 button, input {
     margin: 0;
 }
+#signInButton{
+    margin: 10px;
+}
 
 .content{
     position: relative;
@@ -34,11 +37,12 @@ button, input {
 
 .top, .links{
     text-align: center;
-    color: gainsboro
+    color: gainsboro;
+    justify-items: center;
 }
 
 .title{
-    font-size: 50px
+    font-size: 50px;
 }
 
 #movie {
@@ -46,17 +50,14 @@ button, input {
     margin-right: 1%;
 }
 #currentUser{
-    position: relative;
 }
 #currentUserImage{
-    display:inline-block;
     height: 40px;
     width:40px;
     border-radius: 50%;
 }
 
 #currentUserName{
-    display:inline-block;
     font-size: 12px;
 }
 
@@ -72,6 +73,9 @@ p {
 .navigate, .logOut, #my-signin2, .searchField {
     display: flex;
     justify-content: center;
+}
+#signInButton{
+    align-items: center;
 }
 
 *:focus {
@@ -119,7 +123,10 @@ footer {
     text-align: center;
     color: gainsboro;
 }
-
+#sectionTitle{
+    left: 550px;
+    top: 130px;
+}
 .searchField{
     display: none;
 }
