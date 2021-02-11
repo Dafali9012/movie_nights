@@ -1,5 +1,4 @@
 import {Spinner} from '../spin/spin.js';
-import {loginCheck} from "./utils.js";
 import { getBusyTime } from "./calendarFunctionality.js";
 
 const infoContainer = document.getElementById("info-text");
@@ -15,19 +14,13 @@ const emailBtn = document.querySelector("#email-btn");
 const emailInput = document.querySelector("#email-input");
 const selectMonth = document.querySelector("#select-month");
 const selectDate = document.querySelector("#select-date");
-const eventPost = document.querySelector("#event-post");
-
-/*
-async function poop(email, start, end) {
-    return getBusyTime("razvannechifor00@gmail.com", "2021-02-10T15:00:00.000Z", "2021-02-10T17:00:00.000Z");
-}
-*/
+const selectTime = document.querySelector("#select-time");
 
 let type = "movie";
 let dataList = [];
 let selectedData;
 let participantsList = [];
-
+let today = new Date();
 let options = {
     lines: 13, // The number of lines to draw
     length: 38, // The length of each line
@@ -48,10 +41,7 @@ let options = {
     className: 'spinner', // The CSS class to assign to the spinner
     position: 'relative', // Element positioning
   };
-
 let spinner = new Spinner(options);
-
-let today = new Date();
 
 selectMonth.value = today.getMonth();
 updateDateOptions();
@@ -69,8 +59,12 @@ function updateDateOptions(month) {
 }
 
 selectMonth.onchange = e => {
-    console.log(e.currentTarget.value);
     updateDateOptions(selectMonth.value);
+    //selectTime.setAttribute("disabled", "true");
+}
+
+selectDate.onchange = e => {
+    //selectTime.setAttribute("disabled", "true");
 }
 
 document.getElementById("home").addEventListener('click', e => {
@@ -121,7 +115,6 @@ document.getElementById("btn-Submit").addEventListener('click', () => {
                 document.getElementById("movie-genre").textContent = dataList[selectedData].Genre;
                 document.getElementById("movie-runtime").textContent = dataList[selectedData].Runtime;
                 document.getElementById("movie-rating").textContent = dataList[selectedData].imdbRating + " | imdb";
-                console.log("Hej, du har valt film:", dataList[selectedData].Title);
             });
         });
     })
@@ -166,14 +159,12 @@ emailBtn.addEventListener("click", ()=>{
     }
 });
 
-let busyTimes = [];
-
 document.querySelector("#find-time").addEventListener("click", async ()=> {
     let month = document.querySelector("#select-month").value;
     let date = document.querySelector("#select-date").value;
+    let year = (month==today.getMonth() && date < today.getDate())?today.getFullYear()-1:today.getFullYear();
 
-    let start = new Date(2021, parseInt(month), parseInt(date));
-    start.setHours(0);
+    let start = new Date(year, parseInt(month), parseInt(date), 0, 0, 0, 0);
     let end = new Date(start);
     end.setHours(24);
 
@@ -181,45 +172,97 @@ document.querySelector("#find-time").addEventListener("click", async ()=> {
     for(let i = 0; i < 48; i++) {
         let time = new Date(start);
         time.setMinutes(time.getMinutes()+30*i);
-        availableTimes.push(time.getTime());
+        availableTimes.push(time);
     }
 
-    console.log(availableTimes);
-
+    let busyTimes = [];
     for(let i = 0; i < participantsList.length; i++) {
         await getBusyTime(participantsList[i], start.toISOString(), end.toISOString()).then(a=>{
             busyTimes.push(a);
         });
     }
 
+    let timesToRemove = [];
     for(let calendar of busyTimes) {
         for(let event of calendar) {   
             for(let time of availableTimes) {
                 if(time >= new Date(event.start).getTime() &&
                 time <= new Date(event.end).getTime()) {
-                    console.log("deleting");
-                    availableTimes = availableTimes.slice(availableTimes.indexOf(time),availableTimes.indexOf(time)+1);
+                    timesToRemove.push(time);
                 }
             }
         }
     }
 
-    console.log(availableTimes);
+    let runtimeRound = Math.ceil(parseInt(dataList[selectedData].Runtime)/30)*30;
+
+    /*
+    let previousTime;
+    for(let i = availableTimes.length; i > 0; i--) {
+        if(i == availableTimes.length) {
+            availableTimes.slice(i-runtimeRound/30+1, availableTimes.length).reverse().forEach(a=>{
+                previousTime = a;
+                    if(i == 0) {
+                        timesToRemove.push(a);
+                    } else {
+                        if(!(a.getTime()-previousTime.getTime() > 30*60*1000)) timesToRemove.push(a);
+                    }
+            });
+        } else {
+            previousTime = availableTimes[i+1];
+            if(previousTime.getTime()-availableTimes[i].getTime() > 30*60*1000) {
+                availableTimes.slice(i-runtimeRound/30+1, availableTimes.length).reverse().forEach((a,i)=>{
+                    previousTime = a;
+                    if(i == 0) {
+                        timesToRemove.push(a);
+                    } else {
+                        if(!(a.getTime()-previousTime.getTime() > 30*60*1000)) timesToRemove.push(a);
+                    }
+                });
+            }
+        }
+    }
+    */
+
+    timesToRemove = Array.from(new Set(timesToRemove));
+
+    for(let time of timesToRemove) {
+        availableTimes.splice(availableTimes.indexOf(time), 1);
+    }
+
+    selectTime.innerHTML = ``;
+    for(let time of availableTimes) {
+        selectTime.innerHTML = selectTime.innerHTML.concat(`
+            <option value="${time.toISOString()}">${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}</option>
+        `);
+    }
+    //selectTime.setAttribute("disabled", "false");
 });
 
-eventPost.addEventListener("click", () => {
+document.querySelector("#event-post").addEventListener("click", () => {
+    let endDate = new Date(selectTime.value);
+
+    endDate.setMinutes(endDate.getMinutes()+parseInt(dataList[selectedData].Runtime));
+
     let event = {
-        "summary": document.querySelector("#summary").value,
-        "location": "Malmö",
-        "description": document.querySelector("#desc").value,
-        "start": "2021-02-08T14:00:00.000Z",
-        "end": "2021-02-08T15:00:00.000Z",
-        "timeZone": "GMT+0100",
-        "attendees": participantsList
+        summary: document.querySelector("#summary").value,
+        location: "Malmö",
+        description: document.querySelector("#desc").value,
+        start: selectTime.value,
+        end: endDate.toISOString(),
+        timeZone: "GMT+0100",
+        attendees: participantsList
     }
+
+    fetch("/rest/v1/calendar/events" ,{
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(event),
+        method:"POST"
+    });
 });
 
 async function fetchMedia(type){
-    console.log("searching for " + input.value + " in "+type);
     return await (await fetch(`http://localhost:5500/rest/v1/media?title=${ input.value }&type=${ type }`)).json();
 }
