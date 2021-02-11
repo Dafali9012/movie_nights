@@ -1,4 +1,3 @@
-let accessToken;
 let signOutButton = document.getElementById("signOutButton");
 let signInButton = document.getElementById("signInButton");
 let eventButton = document.getElementById("event");
@@ -59,11 +58,15 @@ async function signInCallback(authResult) {
 
 function showUserInfoAndSignOutButton(){
   let googleUser = gapi.auth2.getAuthInstance().currentUser.get();
+  let accessToken = googleUser.uc.access_token;
   let profile = googleUser.getBasicProfile()
   signOutButton.style.setProperty('display', 'block');
   currentUser.style.setProperty('display', 'block');
   currentUserImage.src = profile.getImageUrl();;
   currentUserName.appendChild(document.createTextNode(profile.getName()));
+      if(accessToken){
+        sendAccessTokenToServer(accessToken);
+      }
 }
 
 async function sendAccessTokenToServer(accessToken){
