@@ -7,9 +7,6 @@ let currentUser = document.getElementById("currentUser");
 let auth2;
 onLoadCallback()
 
-
-
-
 function onLoadCallback() {
   start();
   signInButton.addEventListener('click', () => {
@@ -18,11 +15,10 @@ function onLoadCallback() {
 }
 
 function start() {
- gapi.load("auth2", function () {
+  gapi.load('auth2', function() {
     auth2 = gapi.auth2.getAuthInstance({
-      client_id:
-        "834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com",
-      scope: "https://www.googleapis.com/auth/calendar.events",
+      client_id: "834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com",
+      scope: "https://www.googleapis.com/auth/calendar.events"
     });
   });
 }
