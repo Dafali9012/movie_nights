@@ -74,12 +74,21 @@ selectMonth.onchange = e => {
 }
 
 document.getElementById("home").addEventListener('click', e => {
+    document.getElementById("home").style.background = "grey";
+    document.getElementById("movie").style.background = "";
+    document.getElementById("series").style.background = "";
     changePage(e);
 })
 document.getElementById("movie").addEventListener('click', e => {
+    document.getElementById("movie").style.background = "grey";
+    document.getElementById("home").style.background = "";
+    document.getElementById("series").style.background = "";
     changePage(e);
 })
 document.getElementById("series").addEventListener('click', e => {
+    document.getElementById("series").style.background = "grey";
+    document.getElementById("home").style.background = "";
+    document.getElementById("movie").style.background = "";
     changePage(e);
 })
 
@@ -87,8 +96,7 @@ function changePage(e) {
     mediaContainer.innerHTML = "";
     input.value = "";
     dataList = [];
-    sectionTitle.innerText = e.currentTarget.id=="home"?"Home":e.currentTarget.id=="movie"?"Movies":e.currentTarget.id=="series"?"Series":"";
-    if(e.currentTarget.id=="home") {
+    if(e.currentTarget.id==="home") {
         inputContainer.style.display = "none"
         infoContainer.style.display = "flex"
     }
