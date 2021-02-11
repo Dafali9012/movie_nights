@@ -42,14 +42,14 @@ async function signInCallback(authResult) {
   console.log('authResult', authResult);
     if (authResult['code']) {
 
-      let result = await fetch('/api/storeauthcode', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/octet-stream; charset=utf-8',
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-        body: authResult['code']
-      });
+      // let result = await fetch('/api/storeauthcode', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/octet-stream; charset=utf-8',
+      //     'X-Requested-With': 'XMLHttpRequest',
+      //   },
+      //   body: authResult['code']
+      // });
   }else {
        console.log("there was an error")
      }
