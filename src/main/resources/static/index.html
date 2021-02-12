@@ -7,11 +7,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"/>
     <link rel="stylesheet" href="./style/style.css"/>
     <meta name="google-signin-client_id" content="834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
     <script src="./src/main.js" async defer></script>
     <script type="module" src="./src/index.js"></script>
-    <script defer src="./src/main.js"></script>
     
   </head>
   <body>
@@ -80,9 +78,11 @@
       <div id=modal-event>
         <div class="left" style="flex-grow: .25;">
           <h4 style="align-self: start; padding-left: 5%;">ADD PARTICIPANTS</h4>
-          <div id="inputContainer-email" style="padding-bottom: 10px;">
-            <input class="inputField" type="text" id="email-input" placeholder="example@mail.com" style="width: 90%">
-            <button class="btnSubmit" id="email-btn">&#10132;</button>
+          <div id="email-input">
+            <select id="inputContainer-email">
+              
+            </select>
+            <button id="email-btn">+</button>
           </div>
           <div id="list-participants" style="align-self: start; padding-left: 5%;"></div>
         </div>
@@ -125,6 +125,11 @@
           <button class="close-modal">X</button>
           <button id="event-post">Create Event</button>
         </div>
+      </div>
+
+      <div id=modal-confirm>
+        <h4 style="justify-content: center; text-align: center;">You did it!</h4>
+        <button class="close-modal">Close</button>
       </div>
   </body>
 </html>

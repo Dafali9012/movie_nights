@@ -3,7 +3,6 @@ package wisemen.movienights.controllers;
 import com.google.api.client.googleapis.auth.oauth2.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,7 +46,8 @@ public class LoginController {
                 tokenResponse.getAccessToken(),
                 tokenResponse.getRefreshToken(),
                 System.currentTimeMillis() + tokenResponse.getExpiresInSeconds() * 1000,
-                tokenResponse.parseIdToken().getPayload().getEmail()
+                tokenResponse.parseIdToken().getPayload().getEmail(),
+                (String) tokenResponse.parseIdToken().getPayload().get("name")
             );
         } catch (IOException e) {
             e.printStackTrace();

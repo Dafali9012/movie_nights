@@ -36,9 +36,7 @@ public class GoogleCalendarEventsController {
 
     @PostMapping
     public ResponseEntity createGoogleCalendarEvent(@RequestBody CustomEvent event) {
-        calendarEventsService.crateNewEvent(event);
+        calendarEventsService.createNewEvent(event);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
-
-
 }

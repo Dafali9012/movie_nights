@@ -131,6 +131,11 @@ footer {
     display: none;
 }
 
+#email-input {
+    display: flex;
+    flex-direction: row;
+}
+
 #inputContainer-email {
     display: flex;
     flex-direction: row;
@@ -151,6 +156,21 @@ footer {
     position:absolute;
     width: 65vw;
     height: 65vh;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    border-radius: 10px;
+}
+
+#modal-confirm {
+    display: none;
+    flex-direction: column;
+    position:absolute;
+    width: 65vw;
+    height: 15vh;
     margin: auto;
     left: 0;
     right: 0;
