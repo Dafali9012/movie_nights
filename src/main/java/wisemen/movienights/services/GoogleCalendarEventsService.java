@@ -23,7 +23,7 @@ import java.util.List;
 
 @Service
 @SuppressWarnings("deprecation")
-public class   GoogleCalendarEventsService {
+public class GoogleCalendarEventsService {
     private DateTime now;
     private Events events;
 

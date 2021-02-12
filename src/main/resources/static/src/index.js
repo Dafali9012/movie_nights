@@ -249,9 +249,11 @@ document.querySelector("#find-time").addEventListener("click", async ()=> {
 
 document.querySelector("#event-post").addEventListener("click", () => {
     let endDate = new Date(selectTime.value);
+    let googleUser = gapi.auth2.getAuthInstance().currentUser.get();
+    let profile = googleUser.getBasicProfile();
 
     endDate.setMinutes(endDate.getMinutes()+parseInt(dataList[selectedData].Runtime));
-
+    participantsList.push(profile.getEmail())
     let event = {
         summary: document.querySelector("#summary").value,
         location: "Malmö",

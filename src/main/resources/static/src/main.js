@@ -16,7 +16,7 @@ function onLoadCallback() {
 
 function start() {
     gapi.load('auth2', () => {
-        auth2 = gapi.auth2.init({
+        auth2 = gapi.auth2.getAuthInstance({
             client_id: "834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com",
             scope: "https://www.googleapis.com/auth/calendar"
         });

@@ -2,6 +2,7 @@ package wisemen.movienights.entities;
 
 
 import java.util.List;
+import java.util.Set;
 
 public class CustomEvent {
     private String summary;
@@ -9,9 +10,9 @@ public class CustomEvent {
     private String description;
     private String start;
     private String end;
-    private List<String> attendees;
+    private Set<String> attendees;
 
-    public CustomEvent(String summary, String location, String description, String start, String end, List<String> attendees) {
+    public CustomEvent(String summary, String location, String description, String start, String end, Set<String> attendees) {
         this.summary = summary;
         this.location = location;
         this.description = description;
@@ -40,7 +41,7 @@ public class CustomEvent {
         return end;
     }
 
-    public List<String> getAttendees() {
+    public Set<String> getAttendees() {
         return attendees;
     }
 
