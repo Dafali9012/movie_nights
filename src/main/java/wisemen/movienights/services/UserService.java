@@ -17,20 +17,22 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private LoginController loginController;
+    private GoogleCalendarEventsService googleCalendarEventsService;
 
     public void createUser(String accessToken, String refreshToken, Long expiresAt, String email) {
         User newuser = new User(email, accessToken, refreshToken, expiresAt);
         Optional<User> databaseUser = userRepository.findById(email);
         if(databaseUser.isPresent()) {
             if(System.currentTimeMillis() > expiresAt) {
-                GoogleCredential refreshedCredentials = loginController.getRefreshedCredentials(refreshToken);
+                GoogleCredential refreshedCredentials = googleCalendarEventsService.getRefreshedCredentials(refreshToken);
                 newuser.setAccessToken(refreshedCredentials.getAccessToken());
                 newuser.setRefreshToken(refreshedCredentials.getRefreshToken());
                 newuser.setExpiresAt(refreshedCredentials.getExpiresInSeconds()*1000);
+                userRepository.save(newuser);
             }
+        } else {
+            userRepository.save(newuser);
         }
-        userRepository.save(newuser);
     }
 
     public User getUser(String email) {
