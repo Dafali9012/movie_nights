@@ -30,7 +30,7 @@ import java.util.List;
 public class   GoogleCalendarEventsService {
     private DateTime now;
     private Events events;
-    private final List<EventAttendee> attendees = new ArrayList<>();
+    private List<EventAttendee> attendees = new ArrayList<>();
 
     private String CLIENT_ID = "834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com";
     private String CLIENT_SECRET = "8qMXbutui-w-ygkf7UfBIjw0";
