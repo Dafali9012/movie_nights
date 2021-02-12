@@ -5,6 +5,7 @@ let currentUserImage = document.getElementById("currentUserImage");
 let currentUserName = document.getElementById("currentUserName");
 let currentUser = document.getElementById("currentUser");
 let auth2;
+
 //onLoadCallback();
 
 function onLoadCallback() {

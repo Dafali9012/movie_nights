@@ -46,7 +46,8 @@ public class LoginController {
                 tokenResponse.getAccessToken(),
                 tokenResponse.getRefreshToken(),
                 System.currentTimeMillis() + tokenResponse.getExpiresInSeconds() * 1000,
-                tokenResponse.parseIdToken().getPayload().getEmail()
+                tokenResponse.parseIdToken().getPayload().getEmail(),
+                (String) tokenResponse.parseIdToken().getPayload().get("name")
             );
         } catch (IOException e) {
             e.printStackTrace();

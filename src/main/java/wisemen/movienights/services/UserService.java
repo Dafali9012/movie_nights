@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import wisemen.movienights.entities.User;
 import wisemen.movienights.repositories.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @SuppressWarnings("deprecation")
@@ -18,8 +19,8 @@ public class UserService {
     @Autowired
     private GoogleCalendarEventsService googleCalendarEventsService;
 
-    public void createUser(String accessToken, String refreshToken, Long expiresAt, String email) {
-        User newuser = new User(email, accessToken, refreshToken, expiresAt);
+    public void createUser(String accessToken, String refreshToken, Long expiresAt, String email, String name) {
+        User newuser = new User(email, accessToken, refreshToken, name, expiresAt);
         Optional<User> databaseUser = userRepository.findById(email);
         if(databaseUser.isPresent()) {
             if(System.currentTimeMillis() > expiresAt) {
@@ -36,5 +37,10 @@ public class UserService {
 
     public User getUser(String email) {
         return userRepository.findById(email).get();
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = (List<User>) userRepository.findAll();
+        return users;
     }
 }

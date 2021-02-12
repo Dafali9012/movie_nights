@@ -15,6 +15,8 @@ const emailInput = document.querySelector("#email-input");
 const selectMonth = document.querySelector("#select-month");
 const selectDate = document.querySelector("#select-date");
 const selectTime = document.querySelector("#select-time");
+const selectEmail = document.querySelector("#inputContainer-email");
+const modalConfirm = document.querySelector("#modal-confirm");
 
 let type = "movie";
 let dataList = [];
@@ -113,7 +115,7 @@ document.getElementById("btn-Submit").addEventListener('click', () => {
             <img class="poster" src="${a.Poster}" data="${i}" alt="${a.Title}" />`);
         });
         document.querySelectorAll(".poster").forEach(el=>{
-            el.addEventListener('click', e=>{
+            el.addEventListener('click', async e=>{
                 modalInfo.style.display = "flex";
                 darken.style.display = "block";
                 selectedData = e.currentTarget.getAttribute("data");
@@ -123,6 +125,15 @@ document.getElementById("btn-Submit").addEventListener('click', () => {
                 document.getElementById("movie-genre").textContent = dataList[selectedData].Genre;
                 document.getElementById("movie-runtime").textContent = dataList[selectedData].Runtime;
                 document.getElementById("movie-rating").textContent = dataList[selectedData].imdbRating + " | imdb";
+
+                let users = await (await fetch("/api/v1/user")).json();
+
+                selectEmail.innerHTML = ``;
+                users.forEach(user=>{
+                    selectEmail.innerHTML = selectEmail.innerHTML.concat(`
+                        <option value="${user.email}">${user.name}</option>
+                    `);
+                });
             });
         });
     })
@@ -142,11 +153,13 @@ function closeAllModals() {
     modalEvent.style.display = "none";
     modalInfo.style.display = "none";
     darken.style.display = "none";
+    modalConfirm.style = "none";
 }
 
 document.getElementById("event-form").addEventListener("click", ()=> {
     if(true) {
-        modalInfo.style.display = "none";
+        closeAllModals();
+        darken.style.display = "block";
         modalEvent.style.display = "flex";
     
         participantsContainer.innerText = "";
@@ -157,7 +170,7 @@ document.getElementById("event-form").addEventListener("click", ()=> {
 });
 
 emailBtn.addEventListener("click", ()=>{
-    participantsList.push(emailInput.value);
+    if(!participantsList.includes(selectEmail.value)) participantsList.push(selectEmail.value);
     emailInput.value = "";
     participantsContainer.innerText = "";
     for(let email of participantsList) {
@@ -271,6 +284,10 @@ document.querySelector("#event-post").addEventListener("click", () => {
         body:JSON.stringify(event),
         method:"POST"
     });
+
+    closeAllModals();
+    darken.style.display = "block";
+    modalConfirm.style.display = "flex";
 });
 
 async function fetchMedia(type){

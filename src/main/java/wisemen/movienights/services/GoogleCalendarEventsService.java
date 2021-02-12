@@ -33,7 +33,7 @@ public class GoogleCalendarEventsService {
     @Autowired
     private UserService userService;
 
-    public ResponseEntity crateNewEvent(CustomEvent customEvent){
+    public ResponseEntity createNewEvent(CustomEvent customEvent){
         List<EventAttendee> attendees = new ArrayList<>();
         customEvent.getAttendees().forEach(email->{
             attendees.add(new EventAttendee().setEmail(email));

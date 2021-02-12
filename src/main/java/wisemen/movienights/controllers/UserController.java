@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import wisemen.movienights.entities.User;
 import wisemen.movienights.services.UserService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -22,5 +24,11 @@ public class UserController {
         User user = userService.getUser(email);
         if(user==null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(user, HttpStatus.FOUND);
+    }
+
+    @GetMapping
+    public ResponseEntity getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

@@ -16,6 +16,6 @@ import javax.persistence.Id;
 public class User {
     @Id
     private String email;
-    private String accessToken, refreshToken;
+    private String accessToken, refreshToken, name;
     private Long expiresAt;
 }
