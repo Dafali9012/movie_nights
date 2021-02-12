@@ -5,7 +5,7 @@ let currentUserImage = document.getElementById("currentUserImage");
 let currentUserName = document.getElementById("currentUserName");
 let currentUser = document.getElementById("currentUser");
 let auth2;
-//onLoadCallback()
+//onLoadCallback();
 
 function onLoadCallback() {
     start();
@@ -24,7 +24,7 @@ function start() {
 }
 
 function signIn(){
-    /*auth2.grantOfflineAccess().then(signInCallback);*/
+    auth2.grantOfflineAccess().then(signInCallback);
 }
 
 function signOut() {
@@ -42,7 +42,6 @@ function signOut() {
 async function signInCallback(authResult) {
     console.log('authResult', authResult);
     if (authResult['code']) {
-        /*
         let result = await fetch('/api/storeauthcode', {
             method: 'POST',
             headers: {
@@ -51,7 +50,7 @@ async function signInCallback(authResult) {
             },
             body: authResult['code']
         });
-        */
+        console.log(result);
     }else {
         console.log("there was an error")
     }

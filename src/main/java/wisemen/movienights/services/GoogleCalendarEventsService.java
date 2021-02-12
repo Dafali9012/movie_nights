@@ -1,6 +1,8 @@
 package wisemen.movienights.services;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleRefreshTokenRequest;
+import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
@@ -30,6 +32,9 @@ public class   GoogleCalendarEventsService {
     private Events events;
     private final List<EventAttendee> attendees = new ArrayList<>();
 
+    private String CLIENT_ID = "834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com";
+    private String CLIENT_SECRET = "8qMXbutui-w-ygkf7UfBIjw0";
+
     @Autowired
     private UserController userController;
 
@@ -47,10 +52,11 @@ public class   GoogleCalendarEventsService {
         newEvent.setEnd(eventEnd);
         newEvent.setLocation(customEvent.getLocation());
 
-        customEvent.getAttendees().forEach(a->{
-            User user = userController.getUser(a).getBody();
+        customEvent.getAttendees().forEach(email->{
+            User user = userController.getUser(email).getBody();
 
-            GoogleCredential credentials = new GoogleCredential().setAccessToken(user.getAccessToken());
+            GoogleCredential credentials = getRefreshedCredentials(user.getRefreshToken());
+            //GoogleCredential credentials = new GoogleCredential().setAccessToken(user.getAccessToken());
             Calendar googleCalendar;
 
             try {
@@ -62,12 +68,12 @@ public class   GoogleCalendarEventsService {
                         .build();
 
                 googleCalendar.events().insert("primary", newEvent).execute();
-                attendees.clear();
             } catch (Exception e){
                 System.out.println("Exception ");
                 e.printStackTrace();
             }
         });
+        attendees.clear();
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -75,6 +81,20 @@ public class   GoogleCalendarEventsService {
         customEvent.getAttendees().stream()
                 .map( attend -> new EventAttendee().setEmail(attend))
                 .forEach(attendees::add);
+    }
+
+    public GoogleCredential getRefreshedCredentials(String refreshCode) {
+        try {
+            GoogleTokenResponse response = new GoogleRefreshTokenRequest(
+                    new NetHttpTransport(), JacksonFactory.getDefaultInstance(), refreshCode, CLIENT_ID, CLIENT_SECRET)
+                    .execute();
+
+            return new GoogleCredential().setAccessToken(response.getAccessToken());
+        }
+        catch( Exception ex ){
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     /*

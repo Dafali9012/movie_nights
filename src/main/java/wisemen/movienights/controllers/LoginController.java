@@ -16,16 +16,17 @@ import java.io.IOException;
 @SuppressWarnings("deprecation")
 @RestController
 public class LoginController {
-    @Value("${spring.security.oauth2.client.registration.google.client-id}")
-    private String CLIENT_ID;
-    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
-    private String CLIENT_SECRET;
+    //@Value("${spring.security.oauth2.client.registration.google.client-id}")
+    private String CLIENT_ID = "834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com";
+    //@Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    private String CLIENT_SECRET = "8qMXbutui-w-ygkf7UfBIjw0";
 
     @Autowired
     private UserService userService;
 
     @PostMapping("/api/storeauthcode")
     public String storeauthcode(@RequestBody String code, @RequestHeader("X-Requested-With") String encoding) {
+
         if (encoding == null || encoding.isEmpty()) {
             return "Error, wrong headers";
         }
@@ -52,6 +53,7 @@ public class LoginController {
             e.printStackTrace();
         }
 
+        /*
         // Store these 3 in DB
         String accessToken = tokenResponse.getAccessToken();
         String refreshToken = tokenResponse.getRefreshToken();
@@ -92,20 +94,8 @@ public class LoginController {
         System.out.println("familyName: " + familyName);
         System.out.println("givenName: " + givenName);
 
+
+         */
         return "OK";
-    }
-
-    public GoogleCredential getRefreshedCredentials(String refreshCode) {
-        try {
-            GoogleTokenResponse response = new GoogleRefreshTokenRequest(
-                    new NetHttpTransport(), JacksonFactory.getDefaultInstance(), refreshCode, CLIENT_ID, CLIENT_SECRET)
-                    .execute();
-
-            return new GoogleCredential().setAccessToken(response.getAccessToken());
-        }
-        catch( Exception ex ){
-            ex.printStackTrace();
-            return null;
-        }
     }
 }
