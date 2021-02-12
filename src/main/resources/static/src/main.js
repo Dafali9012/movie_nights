@@ -15,10 +15,10 @@ function onLoadCallback() {
 }
 
 function start() {
-    gapi.load('auth2', function() {
-        auth2 = gapi.auth2.getAuthInstance({
+    gapi.load('auth2', () => {
+        auth2 = gapi.auth2.init({
             client_id: "834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com",
-            scope: "https://www.googleapis.com/auth/calendar.events"
+            scope: "https://www.googleapis.com/auth/calendar"
         });
     });
 }

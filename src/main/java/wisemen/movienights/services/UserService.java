@@ -3,7 +3,6 @@ package wisemen.movienights.services;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wisemen.movienights.controllers.LoginController;
 import wisemen.movienights.entities.User;
 import wisemen.movienights.repositories.UserRepository;
 

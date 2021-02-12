@@ -15,13 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import wisemen.movienights.controllers.UserController;
 import wisemen.movienights.entities.CustomEvent;
 import wisemen.movienights.entities.User;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,20 +26,21 @@ import java.util.List;
 public class   GoogleCalendarEventsService {
     private DateTime now;
     private Events events;
-    private final List<EventAttendee> attendees = new ArrayList<>();
 
     private String CLIENT_ID = "834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com";
     private String CLIENT_SECRET = "8qMXbutui-w-ygkf7UfBIjw0";
 
     @Autowired
-    private UserController userController;
+    private UserService userService;
 
     public ResponseEntity crateNewEvent(CustomEvent customEvent){
+        List<EventAttendee> attendees = new ArrayList<>();
+        customEvent.getAttendees().forEach(email->{
+            attendees.add(new EventAttendee().setEmail(email));
+        });
+
         Event newEvent = new Event();
-        if (!customEvent.getAttendees().isEmpty()){
-            setEventAttendee(customEvent);
-            newEvent.setAttendees(attendees);
-        }
+        newEvent.setAttendees(attendees);
         EventDateTime eventStart = new EventDateTime().setDateTime(new DateTime(customEvent.getStart()));
         EventDateTime eventEnd = new EventDateTime().setDateTime(new DateTime(customEvent.getEnd()));
         newEvent.setSummary(customEvent.getSummary());
@@ -53,10 +50,9 @@ public class   GoogleCalendarEventsService {
         newEvent.setLocation(customEvent.getLocation());
 
         customEvent.getAttendees().forEach(email->{
-            User user = userController.getUser(email).getBody();
+            User user = userService.getUser(email);
 
             GoogleCredential credentials = getRefreshedCredentials(user.getRefreshToken());
-            //GoogleCredential credentials = new GoogleCredential().setAccessToken(user.getAccessToken());
             Calendar googleCalendar;
 
             try {
@@ -77,11 +73,13 @@ public class   GoogleCalendarEventsService {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    /*
     private void setEventAttendee(CustomEvent customEvent){
         customEvent.getAttendees().stream()
                 .map( attend -> new EventAttendee().setEmail(attend))
                 .forEach(attendees::add);
     }
+     */
 
     public GoogleCredential getRefreshedCredentials(String refreshCode) {
         try {
