@@ -18,6 +18,7 @@ public class GoogleCalendarEventsController {
     @Autowired
     GoogleCalendarEventsService calendarEventsService;
 
+    /*
     @GetMapping("/{accessToken}")
     public ResponseEntity initializeAccessToken(@PathVariable String accessToken) {
         if (calendarEventsService.isAccessTokenValid(accessToken)){
@@ -31,9 +32,11 @@ public class GoogleCalendarEventsController {
         else return new ResponseEntity("access_token is missing",HttpStatus.FAILED_DEPENDENCY);
     }
 
+     */
+
     @PostMapping
     public ResponseEntity createGoogleCalendarEvent(@RequestBody CustomEvent event) {
-       if (calendarEventsService.isAccessTokenValid()) calendarEventsService.crateNewEvent(event);
+        calendarEventsService.crateNewEvent(event);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 

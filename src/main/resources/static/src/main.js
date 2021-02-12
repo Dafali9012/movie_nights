@@ -5,7 +5,7 @@ let currentUserImage = document.getElementById("currentUserImage");
 let currentUserName = document.getElementById("currentUserName");
 let currentUser = document.getElementById("currentUser");
 let auth2;
-onLoadCallback()
+//onLoadCallback()
 
 function onLoadCallback() {
     start();
@@ -24,7 +24,7 @@ function start() {
 }
 
 function signIn(){
-    auth2.grantOfflineAccess().then(signInCallback);
+    /*auth2.grantOfflineAccess().then(signInCallback);*/
 }
 
 function signOut() {
@@ -42,15 +42,16 @@ function signOut() {
 async function signInCallback(authResult) {
     console.log('authResult', authResult);
     if (authResult['code']) {
-
-//        let result = await fetch('/api/storeauthcode', {
-//            method: 'POST',
-//            headers: {
-//                'Content-Type': 'application/octet-stream; charset=utf-8',
-//                'X-Requested-With': 'XMLHttpRequest',
-//            },
-//            body: authResult['code']
-//        });
+        /*
+        let result = await fetch('/api/storeauthcode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/octet-stream; charset=utf-8',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: authResult['code']
+        });
+        */
     }else {
         console.log("there was an error")
     }
@@ -66,13 +67,17 @@ function showUserInfoAndSignOutButton(){
     currentUser.style.setProperty('display', 'block');
     currentUserImage.src = profile.getImageUrl();
     currentUserName.appendChild(document.createTextNode(profile.getName()));
+    /*
     if(accessToken){
         sendAccessTokenToServer(accessToken);
     }
+    */
 }
 
+/*
 async function sendAccessTokenToServer(accessToken){
     fetch(`http://localhost:5500/rest/v1/calendar/events/${accessToken}`)
         .then((res) => console.log(res))
         .catch(err => console.log("Error:", err))
 }
+*/

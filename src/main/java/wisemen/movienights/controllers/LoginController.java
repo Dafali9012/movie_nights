@@ -1,19 +1,28 @@
 package wisemen.movienights.controllers;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
+import com.google.api.client.googleapis.auth.oauth2.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import wisemen.movienights.services.UserService;
 
 import java.io.IOException;
 
+@SuppressWarnings("deprecation")
 @RestController
 public class LoginController {
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    private String CLIENT_ID;
+    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    private String CLIENT_SECRET;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/api/storeauthcode")
     public String storeauthcode(@RequestBody String code, @RequestHeader("X-Requested-With") String encoding) {
@@ -27,11 +36,18 @@ public class LoginController {
                     new NetHttpTransport(),
                     JacksonFactory.getDefaultInstance(),
                     "https://www.googleapis.com/oauth2/v4/token",
-                    "834224170973-rafg4gcu10p2dbjk594ntg8696ucq06q.apps.googleusercontent.com",
-                    "8qMXbutui-w-ygkf7UfBIjw0",
+                    CLIENT_ID,
+                    CLIENT_SECRET,
                     code,
                     "http://localhost:5500")
                     .execute();
+
+            userService.createUser(
+                tokenResponse.getAccessToken(),
+                tokenResponse.getRefreshToken(),
+                System.currentTimeMillis() + tokenResponse.getExpiresInSeconds() * 1000,
+                tokenResponse.parseIdToken().getPayload().getEmail()
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,5 +93,19 @@ public class LoginController {
         System.out.println("givenName: " + givenName);
 
         return "OK";
+    }
+
+    public GoogleCredential getRefreshedCredentials(String refreshCode) {
+        try {
+            GoogleTokenResponse response = new GoogleRefreshTokenRequest(
+                    new NetHttpTransport(), JacksonFactory.getDefaultInstance(), refreshCode, CLIENT_ID, CLIENT_SECRET)
+                    .execute();
+
+            return new GoogleCredential().setAccessToken(response.getAccessToken());
+        }
+        catch( Exception ex ){
+            ex.printStackTrace();
+            return null;
+        }
     }
 }

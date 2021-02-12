@@ -9,10 +9,13 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.google.api.services.calendar.model.Events;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import wisemen.movienights.controllers.UserController;
 import wisemen.movienights.entities.CustomEvent;
+import wisemen.movienights.entities.User;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -25,29 +28,46 @@ import java.util.List;
 public class   GoogleCalendarEventsService {
     private DateTime now;
     private Events events;
-    private Calendar googleCalendar ;
-    private GoogleCredential credentials;
     private final List<EventAttendee> attendees = new ArrayList<>();
 
-    public ResponseEntity crateNewEvent(CustomEvent customEvent){
+    @Autowired
+    private UserController userController;
 
+    public ResponseEntity crateNewEvent(CustomEvent customEvent){
         Event newEvent = new Event();
         if (!customEvent.getAttendees().isEmpty()){
             setEventAttendee(customEvent);
             newEvent.setAttendees(attendees);
         }
         EventDateTime eventStart = new EventDateTime().setDateTime(new DateTime(customEvent.getStart()));
-        EventDateTime eventEnd = new EventDateTime().setDateTime(new DateTime(customEvent.getEnd()) );
+        EventDateTime eventEnd = new EventDateTime().setDateTime(new DateTime(customEvent.getEnd()));
         newEvent.setSummary(customEvent.getSummary());
+        newEvent.setDescription(customEvent.getDescription());
         newEvent.setStart(eventStart);
         newEvent.setEnd(eventEnd);
+        newEvent.setLocation(customEvent.getLocation());
 
-        try {
-            googleCalendar.events().insert("razviy69@gmail.com", newEvent).execute();
-            attendees.clear();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        customEvent.getAttendees().forEach(a->{
+            User user = userController.getUser(a).getBody();
+
+            GoogleCredential credentials = new GoogleCredential().setAccessToken(user.getAccessToken());
+            Calendar googleCalendar;
+
+            try {
+                googleCalendar = new Calendar.Builder(
+                        new NetHttpTransport(),
+                        JacksonFactory.getDefaultInstance(),
+                        credentials)
+                        .setApplicationName("Movie Nights")
+                        .build();
+
+                googleCalendar.events().insert("primary", newEvent).execute();
+                attendees.clear();
+            } catch (Exception e){
+                System.out.println("Exception ");
+                e.printStackTrace();
+            }
+        });
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -57,6 +77,7 @@ public class   GoogleCalendarEventsService {
                 .forEach(attendees::add);
     }
 
+    /*
     public ResponseEntity<List<Event>> getAllEvents(){
         now = new DateTime(System.currentTimeMillis());
 
@@ -116,4 +137,6 @@ public class   GoogleCalendarEventsService {
     public boolean isAccessTokenValid(){
         return credentials != null;
     }
+
+     */
 }
