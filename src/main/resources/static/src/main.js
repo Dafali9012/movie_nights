@@ -42,7 +42,6 @@ function signOut() {
 async function signInCallback(authResult) {
     console.log('authResult', authResult);
     if (authResult['code']) {
-
         /*
         let result = await fetch('/api/storeauthcode', {
             method: 'POST',
